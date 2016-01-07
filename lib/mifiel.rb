@@ -1,5 +1,19 @@
-require "mifiel/version"
+require 'active_rest_client'
 
 module Mifiel
-  # Your code goes here...
+  require 'mifiel/errors'
+  autoload :Base, 'mifiel/base'
+  autoload :Document, 'mifiel/document'
+  autoload :Config, 'mifiel/config'
+
+  BASE_URL = 'https://www.mifiel.com/api/v1'
+
+  def self.config
+    if block_given?
+      yield(Mifiel::Config)
+    else
+      Mifiel::Config
+    end
+  end
+
 end
