@@ -1,0 +1,70 @@
+#!/usr/bin/env python
+import re, glob, sys, os
+
+__USAGE__ = \
+"""BUMP is a semantic versioning bump script which accepts the following
+mutually exclusive arguments:
+   -m - a "major" version bump equal to +1.0.0
+   -n - a "minor" version bump equal to +0.1.0
+   -p - a "patch" version bump equal to +0.0.1
+   -h - a "hot fix" version bump equal to +0.0.1
+
+   All of these options allow for the -r flag, which indicates that the state
+   is a RELEASE not a SNAPSHOT. If -r is not specified, then -SNAPSHOT is
+   appended to the updated version string."""
+
+__INITIAL__ = ['0', '0', '1']
+
+
+if __name__ == "__main__":
+    v = []
+    try:
+        version_file = glob.glob("lib/*/version.rb")[0]
+        raw_v = re.search(r'VERSION = \'(.*)\'', open(version_file).read(), re.M|re.I|re.S).group(1)
+        v = re.split(re.compile("\.|-"), raw_v)
+        v = v[0:3]
+        map(int, v)
+
+    except ValueError:
+        print("failed to parse the existing VERSION file, assuming v 0.0.1")
+        v = ['0', '0', '1']
+
+    except FileNotFoundError:
+        print("failed to find a VERSION file, assuming v 0.0.0")
+        v = ['0', '0', '0']
+
+    op = ''
+    try:
+        op = sys.argv[1]
+    except:
+        print(__USAGE__)
+        sys.exit(-1)
+
+    if(op == '-m'):
+        v = [str(int(v[0])+1), '0', '0']
+
+    elif(op == '-n'):
+        v = [v[0], str(int(v[1])+1), '0']
+
+    elif(op == '-p' or op == '-h'):
+        v = [v[0], v[1], str(int(v[2])+1)]
+
+    else:
+        print(__USAGE__)
+        sys.exit(-1)
+
+    v = '.'.join(v)
+
+    if(op == '-h'):
+      os.system("git checkout -b hotfix/v%s master" % v)
+
+    else:
+      os.system("git checkout -b release/v%s develop" % v)
+
+    os.system("bump set %s" % v)
+
+    v += "\n"
+
+    print(v)
+
+    sys.exit(0)
