@@ -8,7 +8,8 @@ Dir['./spec/support/**/*.rb'].each { |f| require f }
 
 # WebMock.disable_net_connect!
 
-Mifiel.config do |c|
-  c.app_id = 'c813b1c5f4e1af7edb6900c684421299dac7d5ae'
-  c.app_secret = 'p6kktpXjcJan0cwr9tEN2iJztULN+7WyIfbrjDZKsx+3aWePU15NOr0NcJJMtMlCyeVQumDpSv1lWF/S2xe1qQ=='
+Mifiel.config do |config|
+  config.app_id = '138b94faa5a43d35f60208449f0e0916de29575e'
+  config.app_secret = 'mJM3igFcJp8Iu/euEtr0ZTAGixmE+4K5R9o2TEOQEQfAiEuB7MpVwgMULoDxhJvbIUCDZ5l2nnxgL93I5JBXEw=='
+  config.base_url = 'http://localhost:3000/api/v1'
 end
