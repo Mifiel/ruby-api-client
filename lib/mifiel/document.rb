@@ -20,21 +20,24 @@ module Mifiel
       JSON.load(response)
     end
 
-    def sign(certificate_id, private_key:nil, private_key_pass:nil, signature:nil)
-      fail MifielError, 'Either private_key/private_key_pass or signature must be provided' if !private_key && !signature
-      fail MifielError, 'private_key_pass must be provided' if private_key && !private_key_pass
-      signature ||= sign_hash(private_key, private_key_pass, original_hash)
-      params = {
-        key: certificate_id,
-        signature: signature
-      }
-      Mifiel::Document._request("#{Mifiel::BASE_URL}/documents/#{id}/sign", :post, params)
+    def sign(certificate_id:nil, certificate:nil)
+      fail ArgumentError, 'Either certificate_id or certificate must be provided' if !certificate_id && !certificate
+      fail ArgumentError, 'Only one of certificate_id or certificate must be provided' if certificate_id && certificate
+      fail NoSignatureError, 'You must first call build_signature or provide a signature' unless signature
+      params = { signature: signature }
+      params[:key] = certificate_id if certificate_id
+      params[:certificate] = certificate.unpack('H*')[0] if certificate
+
       Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/sign", :post, params)
     rescue ActiveRestClient::HTTPClientException => e
       message = e.result.errors || [e.result.error]
       raise MifielError, message.to_a.join(', ')
     rescue ActiveRestClient::HTTPServerException
       raise MifielError, 'Server could not process request'
+    end
+
+    def build_signature(private_key, private_key_pass)
+      self.signature ||= sign_hash(private_key, private_key_pass, original_hash)
     end
 
     private
