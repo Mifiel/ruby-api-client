@@ -11,7 +11,7 @@ module Mifiel
 
     def self.create(payload)
       rest_request = RestClient::Request.new(
-        url: "#{Mifiel::BASE_URL}/documents",
+        url: "#{Mifiel.config.base_url}/documents",
         method: :post,
         payload: payload,
         ssl_version: 'SSLv23'
@@ -29,6 +29,7 @@ module Mifiel
         signature: signature
       }
       Mifiel::Document._request("#{Mifiel::BASE_URL}/documents/#{id}/sign", :post, params)
+      Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/sign", :post, params)
     rescue ActiveRestClient::HTTPClientException => e
       message = e.result.errors || [e.result.error]
       raise MifielError, message.to_a.join(', ')
