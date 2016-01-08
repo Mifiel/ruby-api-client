@@ -1,3 +1,4 @@
+require 'rest-client'
 require 'open3'
 
 module Mifiel
@@ -6,7 +7,18 @@ module Mifiel
     get :all, '/documents'
     get :find, '/documents/:id'
     put :save, '/documents/:id'
-    post :create, '/documents'
+    delete :destroy, '/documents/:id'
+
+    def self.create(payload)
+      rest_request = RestClient::Request.new(
+        url: "#{Mifiel::BASE_URL}/documents",
+        method: :post,
+        payload: payload,
+        ssl_version: 'SSLv23'
+      )
+      response = ApiAuth.sign!(rest_request, Mifiel.config.app_id, Mifiel.config.app_secret).execute
+      JSON.load(response)
+    end
 
     def sign(certificate_id, private_key:nil, private_key_pass:nil, signature:nil)
       fail MifielError, 'Either private_key/private_key_pass or signature must be provided' if !private_key && !signature
