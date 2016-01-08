@@ -39,6 +39,12 @@ module Mifiel
 
     private
 
+      # Sign the provided hash
+      # @param key [String] The contents of the .key file (File.read(...))
+      # @param pass [String] The password of the key
+      # @param hash [String] The hash or string to sign
+      #
+      # @return [String] Hex string of the signature
       def sign_hash(key, pass, hash)
         private_key = build_private_key(key, pass)
         unless private_key.private?
