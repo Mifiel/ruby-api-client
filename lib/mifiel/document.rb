@@ -7,13 +7,19 @@ module Mifiel
     get :all, '/documents'
     get :find, '/documents/:id'
     put :save, '/documents/:id'
-    delete :destroy, '/documents/:id'
+    delete :delete, '/documents/:id'
 
-    def self.create(payload)
+    def self.create(file:, signatories:, hash:nil)
+      sgries = {}
+      signatories.each_with_index {|s, i| sgries[i] = s}
       rest_request = RestClient::Request.new(
         url: "#{Mifiel.config.base_url}/documents",
         method: :post,
-        payload: payload,
+        payload: {
+          file: File.new(file),
+          hash: hash,
+          signatories: sgries
+        },
         ssl_version: 'SSLv23'
       )
       response = ApiAuth.sign!(rest_request, Mifiel.config.app_id, Mifiel.config.app_secret).execute
