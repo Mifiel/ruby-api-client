@@ -55,7 +55,6 @@ Document methods:
   + With a pre-created Certificate
 
     ```ruby
-      document = Mifiel::Document.find('id')
       certificate = Mifiel::Certificate.find('cert-id')
       document.sign(certificate_id: certificate.id)
     ```
@@ -63,14 +62,12 @@ Document methods:
   + With a new one
 
     ```ruby
-      document = Mifiel::Document.find('id')
       document.sign(certificate: File.read('FIEL_AAA010101AAA.cer'))
     ```
 
 - Delete
 
   ```ruby
-    document = Mifiel::Document.find('id')
     document.delete
   ```
 
