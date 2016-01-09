@@ -71,6 +71,43 @@ Document methods:
     document.delete
   ```
 
+Certificate methods:
+
+- Sat Certificates
+
+  ```ruby
+    sat_certificates = Mifiel::Certificate.sat
+  ```
+
+- Find:
+
+```ruby
+  certificate = Mifiel::Certificate.find('id')
+  certificate.cer_hex
+  certificate.type_of
+  # ...
+```
+
+- Find all:
+
+```ruby
+  certificates = Mifiel::Certificate.all
+```
+
+- Create
+  
+  ```ruby
+  certificate = Mifiel::Certificate.create(
+    file: 'path/to/my-certificate.cer'
+  )
+  ```
+
+- Delete
+
+  ```ruby
+    certificate.delete
+  ```
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/mifiel/fork )
