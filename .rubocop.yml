@@ -1,0 +1,20 @@
+Style/IndentationConsistency:
+  Enabled: false
+
+Style/SingleSpaceBeforeFirstArg:
+  Enabled: false
+
+Style/AlignHash:
+  Enabled: false
+
+Style/SpaceAroundEqualsInParameterDefault:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Style/EmptyLinesAroundBlockBody:
+  Enabled: false
+
+Metrics/LineLength:
+  Max: 1000
