@@ -1,6 +1,7 @@
 # Mifiel
 
-TODO: Write a gem description
+Ruby SDK for [Mifiel](https://www.mifiel.com) API.
+Please read our [documentation](https://www.mifiel.com/api-docs/) for instructions on how to start using the API.
 
 ## Installation
 
@@ -20,7 +21,58 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+Document methods:
+
+- Find:
+
+```ruby
+  document = Mifiel::Document.find('id')
+  document.original_hash
+  document.file
+  document.file_signed
+  # ...
+```
+
+- Find all:
+
+```ruby
+  documents = Mifiel::Document.all
+```
+
+- Create:
+
+```ruby
+  document = Mifiel::Document.create(
+    file: 'path/to/my-file.pdf',
+    signatories: [
+      { name: 'Signer 1', email: 'signer1@email.com', tax_id: 'AAA010101AAA' },
+      { name: 'Signer 2', email: 'signer2@email.com', tax_id: 'AAA010102AAA' }
+    ]
+  )
+```
+
+- Sign:
+  + With a pre-created Certificate
+
+    ```ruby
+      document = Mifiel::Document.find('id')
+      certificate = Mifiel::Certificate.find('cert-id')
+      document.sign(certificate_id: certificate.id)
+    ```
+
+  + With a new one
+
+    ```ruby
+      document = Mifiel::Document.find('id')
+      document.sign(certificate: File.read('FIEL_AAA010101AAA.cer'))
+    ```
+
+- Delete
+
+  ```ruby
+    document = Mifiel::Document.find('id')
+    document.delete
+  ```
 
 ## Contributing
 
