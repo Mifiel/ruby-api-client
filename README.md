@@ -1,5 +1,7 @@
 # Mifiel
 
+[![Gem Version][gem-version-image]][gem-version-url]
+
 Ruby SDK for [Mifiel](https://www.mifiel.com) API.
 Please read our [documentation](https://www.mifiel.com/api-docs/) for instructions on how to start using the API.
 
@@ -115,3 +117,7 @@ Certificate methods:
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
+
+
+[gem-version-image]: https://badge.fury.io/rb/mifiel.svg
+[gem-version-url]: https://badge.fury.io/rb/mifiel
