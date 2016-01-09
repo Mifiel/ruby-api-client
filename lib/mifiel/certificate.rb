@@ -11,7 +11,7 @@ module Mifiel
         url: "#{Mifiel.config.base_url}/keys",
         method: :post,
         payload: {
-          cer: File.new(file),
+          cer_file: File.new(file)
         },
         ssl_version: 'SSLv23'
       )
