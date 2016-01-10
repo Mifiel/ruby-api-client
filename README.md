@@ -23,6 +23,19 @@ Or install it yourself as:
 
 ## Usage
 
+To start using the API you will need an APP_ID and a APP_SECRET which will be provided upon request (contact us at hola@mifiel.com).
+
+You will first need to create an account in [mifiel.com](https://www.mifiel.com) since the APP_ID and APP_SECRET will be linked to your account.
+
+Then you can configure the gem with:
+
+```ruby
+  Mifiel.config do |config|
+    config.app_id = '<APP_ID>'
+    config.app_secret = '<APP_SECRET>'
+  end
+```
+
 Document methods:
 
 - Find:
