@@ -5,12 +5,12 @@ module Mifiel
     put :save, '/keys/:id'
     get :sat, '/keys/sat'
 
-    def self.create(file:)
+    def self.create(cer_file)
       rest_request = RestClient::Request.new(
         url: "#{Mifiel.config.base_url}/keys",
         method: :post,
         payload: {
-          cer_file: File.new(file)
+          cer_file: File.new(cer_file)
         },
         ssl_version: 'SSLv23'
       )
