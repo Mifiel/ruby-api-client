@@ -1,8 +1,8 @@
 # Mifiel
 
 [![Gem Version][gem-version-image]][gem-version-url]
-[![Build Status](travis-image)](travis-url)
-[![security](security-image)](security-url)
+[![Build Status][travis-image]][travis-url]
+[![security][security-image]][security-url]
 
 Ruby SDK for [Mifiel](https://www.mifiel.com) API.
 Please read our [documentation](https://www.mifiel.com/api-docs/) for instructions on how to start using the API.
