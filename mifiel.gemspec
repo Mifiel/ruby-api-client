@@ -17,17 +17,18 @@ Gem::Specification.new do |spec|
   spec.test_files    = spec.files.grep(%r{^(test|spec|features)/})
   spec.require_paths = ['lib']
 
-  spec.add_runtime_dependency 'rest-client', '~> 1.7'
-  spec.add_runtime_dependency 'json', '~> 1.8'
-  spec.add_runtime_dependency 'api-auth', '~> 1.4'
+  spec.add_runtime_dependency 'rest-client',        '~> 1.7'
+  spec.add_runtime_dependency 'json',               '~> 1.8'
+  spec.add_runtime_dependency 'api-auth',           '~> 1.4'
   spec.add_runtime_dependency 'active_rest_client', '~> 1.2'
 
-  spec.add_development_dependency 'bundler', '~> 1.6'
-  spec.add_development_dependency 'rake', '~> 10.0'
-  spec.add_development_dependency 'rspec', '~> 3.1', '>= 3.1.7'
-  spec.add_development_dependency 'pry', '~> 0.10', '>= 0.10.1'
-  spec.add_development_dependency 'pry-byebug', '~> 3.3', '>= 3.3.0'
-  spec.add_development_dependency 'bump', '~> 0.5', '>= 0.5.3'
-  spec.add_development_dependency 'webmock', '~> 1.22', '>= 1.22.2'
-  spec.add_development_dependency 'sinatra', '~> 1.4', '>= 1.4.7'
+  spec.add_development_dependency 'bundler',    '~> 1.6'
+  spec.add_development_dependency 'rake',       '~> 10.0'
+  spec.add_development_dependency 'rspec',      '~> 3.1',   '>= 3.1.7'
+  spec.add_development_dependency 'pry',        '~> 0.10',  '>= 0.10.1'
+  spec.add_development_dependency 'pry-byebug', '~> 3.3',   '>= 3.3.0'
+  spec.add_development_dependency 'bump',       '~> 0.5',   '>= 0.5.3'
+  spec.add_development_dependency 'webmock',    '~> 1.22',  '>= 1.22.2'
+  spec.add_development_dependency 'sinatra',    '~> 1.4',   '>= 1.4.7'
+  spec.add_development_dependency 'rubocop',    '~> 0.36'
 end
