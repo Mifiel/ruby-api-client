@@ -32,7 +32,21 @@ module Mifiel
       fail NoSignatureError, 'You must first call build_signature or provide a signature' unless signature
       params = { signature: signature }
       params[:key] = certificate_id if certificate_id
-      params[:certificate] = certificate.unpack('H*')[0] if certificate
+      if certificate
+        if certificate.encoding.to_s == 'UTF-8'
+          params[:certificate] = certificate.unpack('H*')[0]
+        else
+          params[:certificate] = certificate
+        end
+      end
+
+      Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/sign", :post, params)
+    rescue ActiveRestClient::HTTPClientException => e
+      message = e.result.errors || [e.result.error]
+      raise MifielError, message.to_a.join(', ')
+    rescue ActiveRestClient::HTTPServerException
+      raise MifielError, 'Server could not process request'
+    end
 
       Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/sign", :post, params)
     rescue ActiveRestClient::HTTPClientException => e

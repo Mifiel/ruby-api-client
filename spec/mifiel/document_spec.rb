@@ -49,6 +49,13 @@ describe Mifiel::Document do
         expect{document.sign(certificate: certificate)}.not_to raise_error
       end
     end
+
+    context 'with certificate in hex' do
+      it do
+        document.build_signature(private_key, private_key_pass)
+        expect{document.sign(certificate: certificate.unpack('H*')[0])}.not_to raise_error
+      end
+    end
   end
 
   describe '#build_signature' do
