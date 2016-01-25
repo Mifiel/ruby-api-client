@@ -17,4 +17,7 @@ Style/EmptyLinesAroundBlockBody:
   Enabled: false
 
 Metrics/LineLength:
-  Max: 1000
+  Max: 190
+
+Style/HashSyntax:
+  EnforcedStyle: ruby19

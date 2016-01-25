@@ -30,40 +30,39 @@ class FakeMifiel < Sinatra::Base
     ).to_json
   end
 
-private
+  private
 
-  def document(args={})
-    id = args[:id] || SecureRandom.uuid
-    {
-      id: id,
-      original_hash: Digest::SHA256.hexdigest(id),
-      file_file_name: 'test-pdf.pdf',
-      signed_by_all: true,
-      signed: true,
-      signed_at: (Time.now.utc).iso8601,
-      status: [1, 'Firmado'],
-      owner: {
-        email: 'signer1@email.com',
-        name: 'Jorge Morales'
-      },
-      file: "/api/v1/documents/#{id}/file",
-      file_download: "/api/v1/documents/#{id}/file?download=true",
-      file_signed: "/api/v1/documents/#{id}/file_signed",
-      file_signed_download: "/api/v1/documents/#{id}/file_signed?download=true",
-      file_zipped: "/api/v1/documents/#{id}/zip",
-      signatures: [{
-        email: 'signer1@email.com',
+    def document(args={})
+      id = args[:id] || SecureRandom.uuid
+      {
+        id: id,
+        original_hash: Digest::SHA256.hexdigest(id),
+        file_file_name: 'test-pdf.pdf',
+        signed_by_all: true,
         signed: true,
-        signed_at: (Time.now.utc - 10000).iso8601,
-        certificate_number: '20001000000200001410',
-        tax_id: 'AAA010101AAA',
-        signature: '77cd5156779c..4e276ef1056c1de11b7f70bed28',
-        user: {
+        signed_at: (Time.now.utc).iso8601,
+        status: [1, 'Firmado'],
+        owner: {
           email: 'signer1@email.com',
           name: 'Jorge Morales'
-        }
-      }]
-    }
-  end
-
+        },
+        file: "/api/v1/documents/#{id}/file",
+        file_download: "/api/v1/documents/#{id}/file?download=true",
+        file_signed: "/api/v1/documents/#{id}/file_signed",
+        file_signed_download: "/api/v1/documents/#{id}/file_signed?download=true",
+        file_zipped: "/api/v1/documents/#{id}/zip",
+        signatures: [{
+          email: 'signer1@email.com',
+          signed: true,
+          signed_at: (Time.now.utc - 10_000).iso8601,
+          certificate_number: '20001000000200001410',
+          tax_id: 'AAA010101AAA',
+          signature: '77cd5156779c..4e276ef1056c1de11b7f70bed28',
+          user: {
+            email: 'signer1@email.com',
+            name: 'Jorge Morales'
+          }
+        }]
+      }
+    end
 end
