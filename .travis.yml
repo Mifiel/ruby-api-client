@@ -1,0 +1,14 @@
+language: ruby
+cache: bundler
+sudo: false
+rvm:
+- 2.1
+- 2.2
+- 2.3.0
+notifications:
+  email:
+    on_success: change
+    on_failure: always
+script:
+- bundle exec rubocop
+- bundle exec rspec spec

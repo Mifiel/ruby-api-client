@@ -2,14 +2,20 @@ require 'pry'
 require 'byebug'
 require 'pry-byebug'
 require 'mifiel'
-# require 'webmock/rspec'
+require 'webmock/rspec'
 
 Dir['./spec/support/**/*.rb'].each { |f| require f }
 
-# WebMock.disable_net_connect!
+RSpec.configure do |config|
 
-Mifiel.config do |config|
-  config.app_id = '138b94faa5a43d35f60208449f0e0916de29575e'
-  config.app_secret = 'mJM3igFcJp8Iu/euEtr0ZTAGixmE+4K5R9o2TEOQEQfAiEuB7MpVwgMULoDxhJvbIUCDZ5l2nnxgL93I5JBXEw=='
-  config.base_url = 'http://localhost:3000/api/v1'
+  config.before(:suite) do
+    Mifiel.config do |conf|
+      conf.app_id = 'APP_ID'
+      conf.app_secret = 'APP_SECRET'
+    end
+  end
+
+  config.before(:each) do
+    stub_request(:any, /mifiel.com/).to_rack(FakeMifiel)
+  end
 end

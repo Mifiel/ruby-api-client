@@ -7,7 +7,7 @@ module Mifiel
   autoload :Certificate, 'mifiel/certificate'
   autoload :Config, 'mifiel/config'
 
-  BASE_URL = 'https://www.mifiel.com/api/v1'
+  BASE_URL = 'https://www.mifiel.com/api/v1'.freeze
 
   def self.config
     if block_given?
@@ -16,5 +16,4 @@ module Mifiel
       Mifiel::Config
     end
   end
-
 end
