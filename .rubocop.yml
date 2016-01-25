@@ -1,9 +1,6 @@
 Style/IndentationConsistency:
   Enabled: false
 
-Style/SingleSpaceBeforeFirstArg:
-  Enabled: false
-
 Style/AlignHash:
   Enabled: false
 
@@ -21,3 +18,4 @@ Metrics/LineLength:
 
 Style/HashSyntax:
   EnforcedStyle: ruby19
+
