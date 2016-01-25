@@ -20,8 +20,8 @@ module Mifiel
         },
         ssl_version: 'SSLv23'
       )
-      response = ApiAuth.sign!(rest_request, Mifiel.config.app_id, Mifiel.config.app_secret).execute
-      JSON.load(response)
+      req = ApiAuth.sign!(rest_request, Mifiel.config.app_id, Mifiel.config.app_secret)
+      JSON.load(req.execute)
     end
 
     def sign(certificate_id:nil, certificate:nil)
@@ -89,7 +89,7 @@ module Mifiel
 
         # delete file from file system
         File.unlink private_file.path
-        fail PrivateKeyError.new("#{error}, #{status}") unless error.empty?
+        fail PrivateKeyError, "#{error}, #{status}" unless error.empty?
 
         OpenSSL::PKey::RSA.new priv_pem_s
       end

@@ -14,8 +14,8 @@ module Mifiel
         },
         ssl_version: 'SSLv23'
       )
-      response = ApiAuth.sign!(rest_request, Mifiel.config.app_id, Mifiel.config.app_secret).execute
-      JSON.load(response)
+      req = ApiAuth.sign!(rest_request, Mifiel.config.app_id, Mifiel.config.app_secret)
+      JSON.load(req.execute)
     end
   end
 end
