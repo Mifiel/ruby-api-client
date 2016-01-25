@@ -22,24 +22,25 @@ describe Mifiel::Document do
   describe '#sign' do
     let!(:signature) { 'signature' }
     let!(:document) { Mifiel::Document.all.first }
+    let!(:certificate_id) { SecureRandom.uuid }
 
     context 'without build_signature first called' do
       it do
-        expect{document.sign(certificate_id: 3)}.to raise_error(Mifiel::NoSignatureError)
+        expect{document.sign(certificate_id: certificate_id)}.to raise_error(Mifiel::NoSignatureError)
       end
     end
 
     context 'with build_signature called before' do
       it do
         document.build_signature(private_key, private_key_pass)
-        expect{document.sign(certificate_id: 3)}.not_to raise_error
+        expect{document.sign(certificate_id: certificate_id)}.not_to raise_error
       end
     end
 
     context 'with signature' do
       it do
         document.signature = signature
-        expect{document.sign(certificate_id: 3)}.not_to raise_error
+        expect{document.sign(certificate_id: certificate_id)}.not_to raise_error
       end
     end
 
