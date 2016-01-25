@@ -1,6 +1,5 @@
 module Mifiel
   class Certificate < Mifiel::Base
-
     get :all, '/keys'
     get :find, '/keys/:id'
     put :save, '/keys/:id'
@@ -18,7 +17,5 @@ module Mifiel
       response = ApiAuth.sign!(rest_request, Mifiel.config.app_id, Mifiel.config.app_secret).execute
       JSON.load(response)
     end
-
   end
-
 end

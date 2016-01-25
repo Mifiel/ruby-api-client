@@ -3,7 +3,6 @@ require 'open3'
 
 module Mifiel
   class Document < Mifiel::Base
-
     get :all, '/documents'
     get :find, '/documents/:id'
     put :save, '/documents/:id'
@@ -11,7 +10,7 @@ module Mifiel
 
     def self.create(file:, signatories:, hash:nil)
       sgries = {}
-      signatories.each_with_index {|s, i| sgries[i] = s}
+      signatories.each_with_index { |s, i| sgries[i] = s }
       rest_request = RestClient::Request.new(
         url: "#{Mifiel.config.base_url}/documents",
         method: :post,
@@ -48,7 +47,7 @@ module Mifiel
       raise MifielError, 'Server could not process request'
     end
 
-    def request_signature(email, cc:nil)
+    def request_signature(_email, cc:nil)
       params = { signature: signature  }
       params[:cc] = cc if cc.is_a?(Array)
       Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/sign", :post, params)
@@ -74,7 +73,7 @@ module Mifiel
       def sign_hash(key, pass, hash)
         private_key = build_private_key(key, pass)
         unless private_key.private?
-          raise NotPrivateKeyError, "The private key is not valid"
+          fail NotPrivateKeyError, 'The private key is not valid'
         end
         signature = private_key.sign(OpenSSL::Digest::SHA256.new, hash)
         signature.unpack('H*')[0]
@@ -95,7 +94,5 @@ module Mifiel
 
         OpenSSL::PKey::RSA.new priv_pem_s
       end
-
   end
-
 end

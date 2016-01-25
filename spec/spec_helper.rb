@@ -9,9 +9,9 @@ Dir['./spec/support/**/*.rb'].each { |f| require f }
 RSpec.configure do |config|
 
   config.before(:suite) do
-    Mifiel.config do |config|
-      config.app_id = 'APP_ID'
-      config.app_secret = 'APP_SECRET'
+    Mifiel.config do |conf|
+      conf.app_id = 'APP_ID'
+      conf.app_secret = 'APP_SECRET'
     end
   end
 
