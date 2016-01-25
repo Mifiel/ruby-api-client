@@ -1,6 +1,7 @@
 # Mifiel
 
 [![Gem Version][gem-version-image]][gem-version-url]
+[![Build Status](travis-image)](travis-url)
 [![security](security-image)](security-url)
 
 Ruby SDK for [Mifiel](https://www.mifiel.com) API.
@@ -137,3 +138,5 @@ Certificate methods:
 [gem-version-url]: https://badge.fury.io/rb/mifiel
 [security-url]: https://hakiri.io/github/Mifiel/ruby-api-client/master
 [security-image]: https://hakiri.io/github/Mifiel/ruby-api-client/master.svg
+[travis-image]: https://travis-ci.org/Mifiel/ruby-api-client.svg?branch=master
+[travis-url]: https://travis-ci.org/Mifiel/ruby-api-client
