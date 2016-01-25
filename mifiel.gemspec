@@ -8,7 +8,7 @@ Gem::Specification.new do |spec|
   spec.version       = Mifiel::VERSION
   spec.authors       = ['Genaro Madrid']
   spec.email         = ['genmadrid@gmail.com']
-  spec.summary       = %q{Ruby SDK for mifiel.com.}
+  spec.summary       = 'Ruby SDK for mifiel.com.'
   spec.homepage      = 'https://github.com/Mifiel/ruby-api-client'
   spec.license       = 'MIT'
 

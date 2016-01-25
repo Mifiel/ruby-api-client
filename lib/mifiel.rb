@@ -16,5 +16,4 @@ module Mifiel
       Mifiel::Config
     end
   end
-
 end
