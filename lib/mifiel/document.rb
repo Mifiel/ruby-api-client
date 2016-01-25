@@ -1,4 +1,3 @@
-require 'rest-client'
 require 'open3'
 
 module Mifiel

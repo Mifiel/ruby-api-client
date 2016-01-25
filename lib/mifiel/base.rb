@@ -1,3 +1,5 @@
+require 'rest-client'
+
 module Mifiel
   class Base < ActiveRestClient::Base
     after_request :rescue_errors
@@ -8,7 +10,7 @@ module Mifiel
         message = result['errors'] || [result['error']]
         fail BadRequestError, message.to_a.join(', ')
       elsif (500..599).include?(response.status)
-        fail ServerError, "Server could not process your request: status #{response.status}"
+        fail ServerError, "Could not process your request: status #{response.status}"
       end
     end
   end
