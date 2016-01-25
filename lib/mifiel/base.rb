@@ -9,7 +9,7 @@ module Mifiel
         result = JSON.load(response.body)
         message = result['errors'] || [result['error']]
         fail BadRequestError, message.to_a.join(', ')
-      elsif (500..599).include?(response.status)
+      elsif (500..599).cover?(response.status)
         fail ServerError, "Could not process your request: status #{response.status}"
       end
     end

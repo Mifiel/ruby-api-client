@@ -1,7 +1,7 @@
-Style/IndentationConsistency:
-  Enabled: false
+AllCops:
+  TargetRubyVersion: 2.1
 
-Style/SingleSpaceBeforeFirstArg:
+Style/IndentationConsistency:
   Enabled: false
 
 Style/AlignHash:
@@ -21,3 +21,4 @@ Metrics/LineLength:
 
 Style/HashSyntax:
   EnforcedStyle: ruby19
+

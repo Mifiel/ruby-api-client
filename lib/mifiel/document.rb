@@ -31,11 +31,11 @@ module Mifiel
       params = { signature: signature }
       params[:key] = certificate_id if certificate_id
       if certificate
-        if certificate.encoding.to_s == 'UTF-8'
-          params[:certificate] = certificate.unpack('H*')[0]
-        else
-          params[:certificate] = certificate
-        end
+        params[:certificate] = if certificate.encoding.to_s == 'UTF-8'
+                                 certificate.unpack('H*')[0]
+                               else
+                                 certificate
+                               end
       end
 
       Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/sign", :post, params)
