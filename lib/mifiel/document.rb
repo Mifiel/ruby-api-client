@@ -46,10 +46,10 @@ module Mifiel
       raise MifielError, 'Server could not process request'
     end
 
-    def request_signature(_email, cc:nil)
-      params = { signature: signature  }
+    def request_signature(email, cc:nil)
+      params = { email: email }
       params[:cc] = cc if cc.is_a?(Array)
-      Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/sign", :post, params)
+      Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/request_signature", :post, params)
     rescue ActiveRestClient::HTTPClientException => e
       message = e.result.errors || [e.result.error]
       raise MifielError, message.to_a.join(', ')
