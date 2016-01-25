@@ -9,7 +9,7 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Genaro Madrid']
   spec.email         = ['genmadrid@gmail.com']
   spec.summary       = 'Ruby SDK for mifiel.com.'
-  spec.homepage      = 'https://github.com/Mifiel/ruby-api-client'
+  spec.homepage      = 'https://www.mifiel.com'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0")
