@@ -40,7 +40,7 @@ class FakeMifiel < Sinatra::Base
         file_file_name: 'test-pdf.pdf',
         signed_by_all: true,
         signed: true,
-        signed_at: (Time.now.utc).iso8601,
+        signed_at: Time.now.utc.iso8601,
         status: [1, 'Firmado'],
         owner: {
           email: 'signer1@email.com',
