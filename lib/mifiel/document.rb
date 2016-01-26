@@ -7,7 +7,7 @@ module Mifiel
     put :save, '/documents/:id'
     delete :delete, '/documents/:id'
 
-    def self.create(file:, signatories:, hash:nil)
+    def self.create(file:, signatories:, hash:nil, callback_url:nil)
       sgries = {}
       signatories.each_with_index { |s, i| sgries[i] = s }
       rest_request = RestClient::Request.new(
@@ -15,8 +15,9 @@ module Mifiel
         method: :post,
         payload: {
           file: File.new(file),
-          hash: hash,
-          signatories: sgries
+          original_hash: hash,
+          signatories: sgries,
+          callback_url: callback_url
         },
         ssl_version: 'SSLv23'
       )
