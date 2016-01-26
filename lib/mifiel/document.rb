@@ -7,7 +7,9 @@ module Mifiel
     put :save, '/documents/:id'
     delete :delete, '/documents/:id'
 
-    def self.create(file:, signatories:, hash:nil, callback_url:nil)
+    def self.create(signatories:, file:nil, hash:nil, callback_url:nil)
+      fail ArgumentError, 'Either file or hash must be provided' if !file && !hash
+      fail ArgumentError, 'Only one of file or hash must be provided' if file && hash
       sgries = {}
       signatories.each_with_index { |s, i| sgries[i] = s }
       rest_request = RestClient::Request.new(
