@@ -30,6 +30,12 @@ class FakeMifiel < Sinatra::Base
     ).to_json
   end
 
+  post '/api/v1/documents/:id/request_signature' do
+    content_type :json
+    status 200
+    { bla: 'Correo enviado' }.to_json
+  end
+
   private
 
     def document(args={})

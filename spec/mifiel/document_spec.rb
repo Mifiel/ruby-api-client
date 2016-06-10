@@ -19,6 +19,16 @@ describe Mifiel::Document do
     end
   end
 
+  describe '#request_signature' do
+    let!(:document) { Mifiel::Document.all.first }
+
+    it '' do
+      expect do
+        document.request_signature('some@email.com')
+      end.not_to raise_error
+    end
+  end
+
   describe '#sign' do
     let!(:signature) { 'signature' }
     let!(:document) { Mifiel::Document.all.first }
