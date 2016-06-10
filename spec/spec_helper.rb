@@ -4,6 +4,13 @@ require 'pry-byebug'
 require 'mifiel'
 require 'webmock/rspec'
 
+require 'simplecov'
+require 'coveralls'
+SimpleCov.start do
+  add_filter '/spec/'
+end
+Coveralls.wear!
+
 Dir['./spec/support/**/*.rb'].each { |f| require f }
 
 RSpec.configure do |config|
