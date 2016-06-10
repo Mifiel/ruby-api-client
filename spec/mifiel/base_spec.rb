@@ -26,6 +26,6 @@ class FakeResponse
 
   def initialize(status)
     @status = status
-    @body = "{\"body\": \"some response\"}"
+    @body = '{"body": "some response"}'
   end
 end

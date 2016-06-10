@@ -57,15 +57,16 @@ class FakeMifiel < Sinatra::Base
       id = args[:id] || SecureRandom.uuid
       {
         id: id,
-        type_of: "FIEL",
-        cer_hex: "308204cf30...1303030303030323",
-        owner: "JORGE MORALES MENDEZ",
-        tax_id: "MOMJ811012643",
-        expires_at: "2017-04-28T19:43:23.000Z",
+        type_of: 'FIEL',
+        cer_hex: '308204cf30...1303030303030323',
+        owner: 'JORGE MORALES MENDEZ',
+        tax_id: 'MOMJ811012643',
+        expires_at: '2017-04-28T19:43:23.000Z',
         expired: false
       }
     end
 
+    # rubocop:disable Metrics/MethodLength
     def document(args={})
       id = args[:id] || SecureRandom.uuid
       {

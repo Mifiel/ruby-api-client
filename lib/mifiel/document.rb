@@ -7,9 +7,9 @@ module Mifiel
     put :save, '/documents/:id'
     delete :delete, '/documents/:id'
 
-    def self.create(signatories:, file:nil, hash:nil, callback_url:nil)
-      fail ArgumentError, 'Either file or hash must be provided' if !file && !hash
-      fail ArgumentError, 'Only one of file or hash must be provided' if file && hash
+    def self.create(signatories:, file: nil, hash: nil, callback_url: nil)
+      raise ArgumentError, 'Either file or hash must be provided' if !file && !hash
+      raise ArgumentError, 'Only one of file or hash must be provided' if file && hash
       sgries = {}
       signatories.each_with_index { |s, i| sgries[i] = s }
       payload = {
@@ -28,10 +28,10 @@ module Mifiel
       JSON.load(req.execute)
     end
 
-    def sign(certificate_id:nil, certificate:nil)
-      fail ArgumentError, 'Either certificate_id or certificate must be provided' if !certificate_id && !certificate
-      fail ArgumentError, 'Only one of certificate_id or certificate must be provided' if certificate_id && certificate
-      fail NoSignatureError, 'You must first call build_signature or provide a signature' unless signature
+    def sign(certificate_id: nil, certificate: nil)
+      raise ArgumentError, 'Either certificate_id or certificate must be provided' if !certificate_id && !certificate
+      raise ArgumentError, 'Only one of certificate_id or certificate must be provided' if certificate_id && certificate
+      raise NoSignatureError, 'You must first call build_signature or provide a signature' unless signature
       params = { signature: signature }
       params[:key] = certificate_id if certificate_id
       if certificate
@@ -44,13 +44,12 @@ module Mifiel
 
       Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/sign", :post, params)
     rescue ActiveRestClient::HTTPClientException => e
-      message = e.result.errors || [e.result.error]
-      raise MifielError, message.to_a.join(', ')
+      raise MifielError, (e.result.errors || [e.result.error]).to_a.join(', ')
     rescue ActiveRestClient::HTTPServerException
       raise MifielError, 'Server could not process request'
     end
 
-    def request_signature(email, cc:nil)
+    def request_signature(email, cc: nil)
       params = { email: email }
       params[:cc] = cc if cc.is_a?(Array)
       Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/request_signature", :post, params)
@@ -76,7 +75,7 @@ module Mifiel
       def sign_hash(key, pass, hash)
         private_key = build_private_key(key, pass)
         unless private_key.private?
-          fail NotPrivateKeyError, 'The private key is not valid'
+          raise NotPrivateKeyError, 'The private key is not valid'
         end
         signature = private_key.sign(OpenSSL::Digest::SHA256.new, hash)
         signature.unpack('H*')[0]
@@ -93,7 +92,7 @@ module Mifiel
 
         # delete file from file system
         File.unlink private_file.path
-        fail PrivateKeyError, "#{error}, #{status}" unless error.empty?
+        raise PrivateKeyError, "#{error}, #{status}" unless error.empty?
 
         OpenSSL::PKey::RSA.new priv_pem_s
       end
