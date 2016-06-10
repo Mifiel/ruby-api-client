@@ -12,15 +12,16 @@ module Mifiel
       fail ArgumentError, 'Only one of file or hash must be provided' if file && hash
       sgries = {}
       signatories.each_with_index { |s, i| sgries[i] = s }
+      payload = {
+        signatories: sgries,
+        callback_url: callback_url
+      }
+      payload[:file] = File.new(file) if file
+      payload[:original_hash] = hash if hash
       rest_request = RestClient::Request.new(
         url: "#{Mifiel.config.base_url}/documents",
         method: :post,
-        payload: {
-          file: File.new(file),
-          original_hash: hash,
-          signatories: sgries,
-          callback_url: callback_url
-        },
+        payload: payload,
         ssl_version: 'SSLv23'
       )
       req = ApiAuth.sign!(rest_request, Mifiel.config.app_id, Mifiel.config.app_secret)
