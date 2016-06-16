@@ -32,4 +32,5 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'webmock',    '~> 1.22',  '>= 1.22.2'
   spec.add_development_dependency 'sinatra',    '~> 1.4',   '>= 1.4.7'
   spec.add_development_dependency 'rubocop',    '~> 0.36'
+  spec.add_development_dependency 'simplecov',  '~> 0.11'
 end

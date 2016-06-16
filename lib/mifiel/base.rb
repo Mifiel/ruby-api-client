@@ -5,12 +5,12 @@ module Mifiel
     after_request :rescue_errors
 
     def rescue_errors(_name, response)
-      if response.status == 400 # bad request
+      if (400..499).cover?(response.status)
         result = JSON.load(response.body)
         message = result['errors'] || [result['error']]
-        fail BadRequestError, message.to_a.join(', ')
+        raise BadRequestError, message.to_a.join(', ')
       elsif (500..599).cover?(response.status)
-        fail ServerError, "Could not process your request: status #{response.status}"
+        raise ServerError, "Could not process your request: status #{response.status}"
       end
     end
   end

@@ -13,3 +13,6 @@
 *.a
 mkmf.log
 rubocop.html
+.ruby-gemset
+.ruby-version
+*.sublime-workspace

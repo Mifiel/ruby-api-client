@@ -1,6 +1,21 @@
 require 'sinatra/base'
 
 class FakeMifiel < Sinatra::Base
+  get '/api/v1/keys' do
+    content_type :json
+    status 200
+    [
+      key,
+      key
+    ].to_json
+  end
+
+  post '/api/v1/keys' do
+    content_type :json
+    status 200
+    key(id: params[:id]).to_json
+  end
+
   get '/api/v1/documents' do
     content_type :json
     status 200
@@ -30,8 +45,28 @@ class FakeMifiel < Sinatra::Base
     ).to_json
   end
 
+  post '/api/v1/documents/:id/request_signature' do
+    content_type :json
+    status 200
+    { bla: 'Correo enviado' }.to_json
+  end
+
   private
 
+    def key(args={})
+      id = args[:id] || SecureRandom.uuid
+      {
+        id: id,
+        type_of: 'FIEL',
+        cer_hex: '308204cf30...1303030303030323',
+        owner: 'JORGE MORALES MENDEZ',
+        tax_id: 'MOMJ811012643',
+        expires_at: '2017-04-28T19:43:23.000Z',
+        expired: false
+      }
+    end
+
+    # rubocop:disable Metrics/MethodLength
     def document(args={})
       id = args[:id] || SecureRandom.uuid
       {
