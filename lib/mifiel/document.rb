@@ -10,17 +10,26 @@ module Mifiel
     def self.create(signatories:, file: nil, hash: nil, callback_url: nil)
       raise ArgumentError, 'Either file or hash must be provided' if !file && !hash
       raise ArgumentError, 'Only one of file or hash must be provided' if file && hash
-      sgries = {}
-      signatories.each_with_index { |s, i| sgries[i] = s }
       payload = {
-        signatories: sgries,
-        callback_url: callback_url
+        signatories: build_signatories(signatories),
+        callback_url: callback_url,
+        file: (File.new(file) if file),
+        original_hash: hash
       }
-      payload[:file] = File.new(file) if file
-      payload[:original_hash] = hash if hash
+      process_request('/documents', :post, payload)
+    end
+
+    def request_signature(email, cc: nil)
+      params = { email: email }
+      params[:cc] = cc if cc.is_a?(Array)
+      Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/request_signature", :post, params)
+    end
+
+    def self.process_request(path, method, payload)
+      path[0] = '' if path[0] == '/'
       rest_request = RestClient::Request.new(
-        url: "#{Mifiel.config.base_url}/documents",
-        method: :post,
+        url: "#{Mifiel.config.base_url}/#{path}",
+        method: method,
         payload: payload,
         ssl_version: 'SSLv23'
       )
@@ -28,10 +37,10 @@ module Mifiel
       JSON.load(req.execute)
     end
 
-    def request_signature(email, cc: nil)
-      params = { email: email }
-      params[:cc] = cc if cc.is_a?(Array)
-      Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/request_signature", :post, params)
+    def self.build_signatories(signatories)
+      sgries = {}
+      signatories.each_with_index { |s, i| sgries[i] = s }
+      sgries
     end
   end
 end
