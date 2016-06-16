@@ -5,7 +5,7 @@ module Mifiel
     after_request :rescue_errors
 
     def rescue_errors(_name, response)
-      if response.status == 400 # bad request
+      if (400..499).cover?(response.status)
         result = JSON.load(response.body)
         message = result['errors'] || [result['error']]
         raise BadRequestError, message.to_a.join(', ')
