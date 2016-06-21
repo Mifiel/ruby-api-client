@@ -19,83 +19,40 @@ describe Mifiel::Document do
     end
   end
 
-  describe '#sign' do
-    let!(:signature) { 'signature' }
+  describe '#request_signature' do
     let!(:document) { Mifiel::Document.all.first }
-    let!(:certificate_id) { SecureRandom.uuid }
+    let!(:error_body) { { errors: ['some error'] }.to_json }
 
-    context 'without build_signature first called' do
-      it do
+    it '' do
+      expect do
+        document.request_signature('some@email.com')
+      end.not_to raise_error
+    end
+
+    context 'when bad request' do
+      before do
+        url = %r{mifiel.com\/api\/v1\/documents\/#{document.id}\/request_signature}
+        stub_request(:post, url).to_return(body: error_body, status: 404)
+      end
+
+      it '' do
         expect do
-          document.sign(certificate_id: certificate_id)
-        end.to raise_error(Mifiel::NoSignatureError)
+          document.request_signature('some@email.com')
+        end.to raise_error(Mifiel::BadRequestError)
       end
     end
 
-    context 'with build_signature called before' do
-      it do
-        document.build_signature(private_key, private_key_pass)
-        expect do
-          document.sign(certificate_id: certificate_id)
-        end.not_to raise_error
+    context 'when server error' do
+      before do
+        url = %r{mifiel.com\/api\/v1\/documents\/#{document.id}\/request_signature}
+        stub_request(:post, url).to_return(body: error_body, status: 500)
       end
-    end
 
-    context 'with signature' do
-      it do
-        document.signature = signature
+      it '' do
         expect do
-          document.sign(certificate_id: certificate_id)
-        end.not_to raise_error
-      end
-    end
-
-    context 'with certificate' do
-      it do
-        document.build_signature(private_key, private_key_pass)
-        expect do
-          document.sign(certificate: certificate)
-        end.not_to raise_error
-      end
-    end
-
-    context 'with certificate in hex' do
-      it do
-        document.build_signature(private_key, private_key_pass)
-        expect do
-          document.sign(certificate: certificate.unpack('H*')[0])
-        end.not_to raise_error
+          document.request_signature('some@email.com')
+        end.to raise_error(Mifiel::ServerError)
       end
     end
   end
-
-  describe '#build_signature' do
-    let!(:document) { Mifiel::Document.all.first }
-
-    context 'with a wrong private_key' do
-      it do
-        expect do
-          document.build_signature('asd', private_key_pass)
-        end.to raise_error(Mifiel::PrivateKeyError)
-      end
-    end
-
-    context 'with a private_key that is not a private_key' do
-      xit do
-        cer = OpenSSL::X509::Certificate.new(certificate)
-        expect do
-          document.build_signature(cer.public_key.to_der, private_key_pass)
-        end.to raise_error(Mifiel::NotPrivateKeyError)
-      end
-    end
-
-    context 'with a wrong password' do
-      it do
-        expect do
-          document.build_signature('asd', private_key_pass)
-        end.to raise_error(Mifiel::PrivateKeyError)
-      end
-    end
-  end
-
 end

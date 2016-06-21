@@ -58,9 +58,14 @@ Document methods:
 
 - Create:
 
+> Use only **hash** if you dont want us to have the file.<br>
+> Either **file** or **hash** must be provided.
+
 ```ruby
   document = Mifiel::Document.create(
     file: 'path/to/my-file.pdf',
+    # OR
+    hash: Digest::SHA256.hexdigest(File.read('path/to/my-file.pdf')), 
     signatories: [
       { name: 'Signer 1', email: 'signer1@email.com', tax_id: 'AAA010101AAA' },
       { name: 'Signer 2', email: 'signer2@email.com', tax_id: 'AAA010102AAA' }
