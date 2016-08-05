@@ -7,14 +7,15 @@ module Mifiel
     put :save, '/documents/:id'
     delete :delete, '/documents/:id'
 
-    def self.create(signatories:, file: nil, hash: nil, callback_url: nil)
+    def self.create(signatories:, file: nil, hash: nil, name: nil, callback_url: nil)
       raise ArgumentError, 'Either file or hash must be provided' if !file && !hash
       raise ArgumentError, 'Only one of file or hash must be provided' if file && hash
       payload = {
         signatories: build_signatories(signatories),
         callback_url: callback_url,
         file: (File.new(file) if file),
-        original_hash: hash
+        original_hash: hash,
+        name: name
       }
       process_request('/documents', :post, payload)
     end

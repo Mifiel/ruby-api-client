@@ -64,12 +64,17 @@ Document methods:
 ```ruby
   document = Mifiel::Document.create(
     file: 'path/to/my-file.pdf',
-    # OR
-    hash: Digest::SHA256.hexdigest(File.read('path/to/my-file.pdf')), 
     signatories: [
       { name: 'Signer 1', email: 'signer1@email.com', tax_id: 'AAA010101AAA' },
       { name: 'Signer 2', email: 'signer2@email.com', tax_id: 'AAA010102AAA' }
     ]
+  )
+  # if you dont want us to have the PDF, you can just send us 
+  # the original_hash and the name of the document. Both are required
+  document = Mifiel::Document.create(
+    hash: Digest::SHA256.hexdigest(File.read('path/to/my-file.pdf')), 
+    name: 'my-file.pdf',
+    signatories: [...]
   )
 ```
 
