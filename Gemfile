@@ -7,8 +7,8 @@ group :development, :test do
   gem 'coveralls', require: false
   gem 'guard', '2.13.0'
   gem 'guard-rspec'
-  # compatible with ruby 2.2.1
-  gem 'listen', '3.1.1'
+  # compatible with ruby >= 1.9.3
+  gem 'listen', '3.0.8'
   gem 'guard-rubocop'
   gem 'terminal-notifier-guard'
 end
