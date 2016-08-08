@@ -17,7 +17,8 @@ module Mifiel
         original_hash: hash,
         name: name
       }
-      process_request('/documents', :post, payload)
+      response = process_request('/documents', :post, payload)
+      JSON.load(response)
     end
 
     def request_signature(email, cc: nil)
@@ -26,7 +27,22 @@ module Mifiel
       Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/request_signature", :post, params)
     end
 
-    def self.process_request(path, method, payload)
+    def save_file(path)
+      response = Mifiel::Document.process_request("/documents/#{id}/file", :get)
+      File.open(path, 'wb') { |file| file.write(response) }
+    end
+
+    def save_file_signed(path)
+      response = Mifiel::Document.process_request("/documents/#{id}/file_signed", :get)
+      File.open(path, 'wb') { |file| file.write(response) }
+    end
+
+    def save_xml(path)
+      response = Mifiel::Document.process_request("/documents/#{id}/xml", :get)
+      File.open(path, 'w') { |file| file.write(response) }
+    end
+
+    def self.process_request(path, method, payload=nil)
       path[0] = '' if path[0] == '/'
       rest_request = RestClient::Request.new(
         url: "#{Mifiel.config.base_url}/#{path}",
@@ -35,7 +51,7 @@ module Mifiel
         ssl_version: 'SSLv23'
       )
       req = ApiAuth.sign!(rest_request, Mifiel.config.app_id, Mifiel.config.app_secret)
-      JSON.load(req.execute)
+      req.execute
     end
 
     def self.build_signatories(signatories)

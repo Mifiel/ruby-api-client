@@ -45,6 +45,21 @@ class FakeMifiel < Sinatra::Base
     ).to_json
   end
 
+  get '/api/v1/documents/:id/file' do
+    status 200
+    'some-pdf-formatted-string'
+  end
+
+  get '/api/v1/documents/:id/file_signed' do
+    status 200
+    'some-pdf-formatted-string'
+  end
+
+  get '/api/v1/documents/:id/xml' do
+    status 200
+    '<some><xml>contents</xml></some>'
+  end
+
   post '/api/v1/documents/:id/request_signature' do
     content_type :json
     status 200

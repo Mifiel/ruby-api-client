@@ -2,6 +2,7 @@
 
 [![Gem Version][gem-version-image]][gem-version-url]
 [![Build Status][travis-image]][travis-url]
+[![Coverage Status][coveralls-image]][coveralls-url]
 [![security][security-image]][security-url]
 
 Ruby SDK for [Mifiel](https://www.mifiel.com) API.
@@ -78,6 +79,17 @@ Document methods:
   )
 ```
 
+- Save Document related files
+
+```ruby
+  # save the original file
+  document.save_file('path/to/save/file.pdf')
+  # save the signed file (original file + signatures page)
+  document.save_file_signed('path/to/save/file-signed.pdf')
+  # save the signed xml file
+  document.save_xml('path/to/save/xml.xml')
+```
+
 - Sign:
   + With a pre-created Certificate
 
@@ -146,7 +158,12 @@ Certificate methods:
 
 [gem-version-image]: https://badge.fury.io/rb/mifiel.svg
 [gem-version-url]: https://badge.fury.io/rb/mifiel
+
 [security-url]: https://hakiri.io/github/Mifiel/ruby-api-client/master
 [security-image]: https://hakiri.io/github/Mifiel/ruby-api-client/master.svg
+
 [travis-image]: https://travis-ci.org/Mifiel/ruby-api-client.svg?branch=master
 [travis-url]: https://travis-ci.org/Mifiel/ruby-api-client
+
+[coveralls-image]: https://coveralls.io/repos/github/Mifiel/ruby-api-client/badge.svg?branch=master
+[coveralls-url]: https://coveralls.io/github/Mifiel/ruby-api-client?branch=master
