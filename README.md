@@ -78,6 +78,17 @@ Document methods:
   )
 ```
 
+- Save Document related files
+
+```ruby
+  # save the original file
+  document.save_file('path/to/save/file.pdf')
+  # save the signed file (original file + signatures page)
+  document.save_file_signed('path/to/save/file-signed.pdf')
+  # save the signed xml file
+  document.save_xml('path/to/save/xml.xml')
+```
+
 - Sign:
   + With a pre-created Certificate
 
