@@ -1,5 +1,5 @@
 require 'sinatra/base'
-
+# rubocop:disable Metrics/ClassLength
 class FakeMifiel < Sinatra::Base
   get '/api/v1/keys' do
     content_type :json

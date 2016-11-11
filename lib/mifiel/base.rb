@@ -6,7 +6,7 @@ module Mifiel
 
     def rescue_errors(_name, response)
       if (400..499).cover?(response.status)
-        result = JSON.load(response.body)
+        result = JSON.parse(response.body)
         message = result['errors'] || [result['error']]
         raise BadRequestError, message.to_a.join(', ')
       elsif (500..599).cover?(response.status)
