@@ -6,7 +6,7 @@ describe Mifiel::Certificate do
       )
     end
 
-    it { expect(certificate).to be_a(Hash) }
+    it { expect(certificate).to be_a(Mifiel::Certificate) }
   end
 
 end

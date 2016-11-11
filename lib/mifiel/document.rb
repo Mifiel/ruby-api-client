@@ -7,7 +7,13 @@ module Mifiel
     put :save, '/documents/:id'
     delete :delete, '/documents/:id'
 
-    def self.create(signatories:, file: nil, hash: nil, name: nil, callback_url: nil)
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
+    def self.create(args)
+      signatories = args[:signatories]
+      file = args[:file]
+      hash = args[:hash]
+      name = args[:name]
+      callback_url = args[:callback_url]
       raise ArgumentError, 'Either file or hash must be provided' if !file && !hash
       raise ArgumentError, 'Only one of file or hash must be provided' if file && hash
       payload = {
@@ -17,9 +23,11 @@ module Mifiel
         original_hash: hash,
         name: name
       }
+      payload = args.merge(payload)
       response = process_request('/documents', :post, payload)
-      JSON.load(response)
+      Mifiel::Document.new(JSON.parse(response))
     end
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
     def request_signature(email, cc: nil)
       params = { email: email }

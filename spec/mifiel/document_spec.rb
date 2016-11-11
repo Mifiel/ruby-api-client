@@ -15,7 +15,7 @@ describe Mifiel::Document do
         )
       end
 
-      it { expect(document).to be_a(Hash) }
+      it { expect(document).to be_a(Mifiel::Document) }
     end
   end
 
@@ -23,8 +23,8 @@ describe Mifiel::Document do
     let!(:document) { Mifiel::Document.all.first }
 
     describe '#save_file' do
-      let!(:path) {'tmp/the-file.pdf' }
-      before { File.unlink(path) if File.exist?(path)}
+      let!(:path) { 'tmp/the-file.pdf' }
+      before { File.unlink(path) if File.exist?(path) }
 
       it 'should get the file' do
         document.save_file(path)
@@ -33,8 +33,8 @@ describe Mifiel::Document do
     end
 
     describe '#save_file_signed' do
-      let!(:path) {'tmp/the-file-signed.pdf' }
-      before { File.unlink(path) if File.exist?(path)}
+      let!(:path) { 'tmp/the-file-signed.pdf' }
+      before { File.unlink(path) if File.exist?(path) }
 
       it 'should get the file' do
         document.save_file_signed(path)
@@ -43,8 +43,8 @@ describe Mifiel::Document do
     end
 
     describe '#save_xml' do
-      let!(:path) {'tmp/the-xml.xml' }
-      before { File.unlink(path) if File.exist?(path)}
+      let!(:path) { 'tmp/the-xml.xml' }
+      before { File.unlink(path) if File.exist?(path) }
 
       it 'should get the file' do
         document.save_xml(path)
