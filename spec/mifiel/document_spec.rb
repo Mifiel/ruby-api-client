@@ -15,7 +15,7 @@ describe Mifiel::Document do
         )
       end
 
-      it { expect(document).to be_a(Hash) }
+      it { expect(document).to be_a(Mifiel::Document) }
     end
   end
 

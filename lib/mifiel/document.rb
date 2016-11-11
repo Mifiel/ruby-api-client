@@ -25,7 +25,7 @@ module Mifiel
       }
       payload = args.merge(payload)
       response = process_request('/documents', :post, payload)
-      JSON.load(response)
+      Mifiel::Document.new(JSON.parse(response))
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
