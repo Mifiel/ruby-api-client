@@ -1,7 +1,7 @@
 require 'rest-client'
 
 module Mifiel
-  class Base < ActiveRestClient::Base
+  class Base < Flexirest::Base
     after_request :rescue_errors
 
     def rescue_errors(_name, response)

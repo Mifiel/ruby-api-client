@@ -19,10 +19,14 @@ Gem::Specification.new do |spec|
   spec.required_ruby_version = '~> 2.1'
 
   spec.add_runtime_dependency 'rest-client',        '~> 1.7'
-  spec.add_runtime_dependency 'json',               '~> 1.8'
-  spec.add_runtime_dependency 'api-auth',           '~> 1.4'
-  spec.add_runtime_dependency 'activesupport',      '~> 4.2.7'
-  spec.add_runtime_dependency 'active_rest_client', '~> 1.2'
+  spec.add_runtime_dependency 'json',               '> 0'
+  spec.add_runtime_dependency 'api-auth',           '> 1.4'
+  if Gem::Version.new(RUBY_VERSION) > Gem::Version.new('2.2.2')
+    spec.add_runtime_dependency 'activesupport'
+  else
+    spec.add_runtime_dependency 'activesupport', '~> 4.2.7'
+  end
+  spec.add_runtime_dependency 'flexirest'
 
   spec.add_development_dependency 'bundler',    '~> 1.6'
   spec.add_development_dependency 'rake',       '~> 10.0'

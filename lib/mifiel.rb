@@ -1,4 +1,4 @@
-require 'active_rest_client'
+require 'flexirest'
 
 module Mifiel
   require 'mifiel/errors'
