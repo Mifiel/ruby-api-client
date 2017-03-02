@@ -22,3 +22,6 @@ Metrics/LineLength:
 Style/HashSyntax:
   EnforcedStyle: ruby19
 
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
