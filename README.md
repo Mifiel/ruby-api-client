@@ -38,6 +38,7 @@ Then you can configure the gem with:
   Mifiel.config do |config|
     config.app_id = '<APP_ID>'
     config.app_secret = '<APP_SECRET>'
+    config.base_url = 'https://app-sandbox.mifiel.com/api/v1' #this line is for dev env only
   end
 ```
 
