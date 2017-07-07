@@ -24,6 +24,7 @@ module Mifiel
         name: name
       }
       payload = args.merge(payload)
+      payload.reject! { |_k, v| v.nil? }
       response = process_request('/documents', :post, payload)
       Mifiel::Document.new(JSON.parse(response))
     end

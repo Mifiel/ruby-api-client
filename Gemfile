@@ -8,7 +8,7 @@ group :development, :test do
   gem 'guard', '2.13.0'
   gem 'guard-rspec'
   # compatible with ruby >= 1.9.3
-  gem 'listen', '3.0.8'
   gem 'guard-rubocop'
+  gem 'listen', '3.0.8'
   gem 'terminal-notifier-guard'
 end
