@@ -16,3 +16,4 @@ rubocop.html
 .ruby-gemset
 .ruby-version
 *.sublime-workspace
+vendor

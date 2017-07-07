@@ -21,13 +21,15 @@ Gem::Specification.new do |spec|
 
   spec.add_runtime_dependency 'rest-client',        '~> 1.7'
   spec.add_runtime_dependency 'json',               '> 0'
-  spec.add_runtime_dependency 'api-auth',           '> 1.4'
+  spec.add_runtime_dependency 'api-auth',           '~> 1.4'
+  # Use Gem::Version to parse the Ruby version for reliable comparison
+  # ActiveSupport 5+ requires Ruby 2.2.2
   if Gem::Version.new(RUBY_VERSION) > Gem::Version.new('2.2.2')
     spec.add_runtime_dependency 'activesupport'
   else
-    spec.add_runtime_dependency 'activesupport', '~> 4.2.7'
+    spec.add_runtime_dependency 'activesupport', '< 5.0.0'
   end
-  spec.add_runtime_dependency 'flexirest'
+  spec.add_runtime_dependency 'flexirest', '~> 1.3.35'
 
   spec.add_development_dependency 'bundler',    '~> 1.6'
   spec.add_development_dependency 'rake',       '~> 10.0'
@@ -37,6 +39,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bump',       '~> 0.5',   '>= 0.5.3'
   spec.add_development_dependency 'webmock',    '~> 1.22',  '>= 1.22.2'
   spec.add_development_dependency 'sinatra',    '~> 1.4',   '>= 1.4.7'
-  spec.add_development_dependency 'rubocop',    '~> 0.36'
+  spec.add_development_dependency 'rubocop',    '0.47.1'
   spec.add_development_dependency 'simplecov',  '~> 0.11'
 end

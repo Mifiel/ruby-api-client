@@ -1,4 +1,5 @@
 require 'open3'
+require 'api-auth'
 
 module Mifiel
   class Document < Mifiel::Base
