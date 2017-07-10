@@ -19,7 +19,7 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.required_ruby_version = '~> 2.1'
 
-  spec.add_runtime_dependency 'rest-client',        '~> 1.7'
+  spec.add_runtime_dependency 'rest-client',        '>= 1.7'
   spec.add_runtime_dependency 'json',               '> 0'
   spec.add_runtime_dependency 'api-auth',           '~> 1.4'
   # Use Gem::Version to parse the Ruby version for reliable comparison
