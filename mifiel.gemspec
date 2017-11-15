@@ -19,8 +19,8 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.required_ruby_version = '~> 2.1'
 
-  spec.add_runtime_dependency 'rest-client',        '>= 1.7'
-  spec.add_runtime_dependency 'json',               '> 0'
+  spec.add_runtime_dependency 'rest-client',        '>= 1.8'
+  spec.add_runtime_dependency 'json',               '~> 1.8'
   spec.add_runtime_dependency 'api-auth',           '~> 1.4'
   # Use Gem::Version to parse the Ruby version for reliable comparison
   # ActiveSupport 5+ requires Ruby 2.2.2
@@ -34,11 +34,11 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'bundler',    '~> 1.6'
   spec.add_development_dependency 'rake',       '~> 10.0'
   spec.add_development_dependency 'rspec',      '~> 3.1',   '>= 3.1.7'
-  spec.add_development_dependency 'pry',        '~> 0.10',  '>= 0.10.1'
-  spec.add_development_dependency 'pry-byebug', '~> 3.3',   '>= 3.3.0'
+  spec.add_development_dependency 'byebug',     '~> 9.0',   '< 9.0.6'
+  spec.add_development_dependency 'pry-byebug', '~> 3.4',   '>= 3.3.0'
   spec.add_development_dependency 'bump',       '~> 0.5',   '>= 0.5.3'
   spec.add_development_dependency 'webmock',    '~> 1.22',  '>= 1.22.2'
   spec.add_development_dependency 'sinatra',    '~> 1.4',   '>= 1.4.7'
   spec.add_development_dependency 'rubocop',    '0.47.1'
-  spec.add_development_dependency 'simplecov',  '~> 0.11'
+  spec.add_development_dependency 'simplecov',  '~> 0.15'
 end
