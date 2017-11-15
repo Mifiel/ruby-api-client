@@ -17,6 +17,52 @@ describe Mifiel::Document do
 
       it { expect(document).to be_a(Mifiel::Document) }
     end
+
+    context 'from template' do
+      let!(:template_id) { 'c6c29866-7fd6-4f77-9ecd-eae8bc3a772a' }
+      let!(:document) do
+        Mifiel::Document.create_from_template(
+          template_id: template_id,
+          fields: {
+            name: 'some'
+          },
+          signatories: [{
+            name: 'Signer',
+            email: 'signer@email.com'
+          }, {
+            name: 'Signer',
+            email: 'signer@email.com'
+          }]
+        )
+      end
+
+      it { expect(document).to be_a Mifiel::Document }
+    end
+
+    context 'many from template' do
+      let!(:template_id) { 'c6c29866-7fd6-4f77-9ecd-eae8bc3a772a' }
+      let!(:documents) do
+        Mifiel::Document.create_many_from_template(
+          template_id: template_id,
+          callback_url: 'http://some-callback.url/mifiel',
+          identifier: 'name',
+          documents: [{
+            fields: {
+              name: 'Some Name'
+            },
+            signatories: [{
+              name: 'Signer',
+              email: 'signer@email.com'
+            }, {
+              name: 'Signer',
+              email: 'signer@email.com'
+            }]
+          }]
+        )
+      end
+
+      it { expect(documents.status).to eq 'success' }
+    end
   end
 
   describe 'working with a document' do
