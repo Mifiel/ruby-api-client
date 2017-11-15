@@ -10,6 +10,39 @@ class FakeMifiel < Sinatra::Base
     ].to_json
   end
 
+  get '/api/v1/templates' do
+    content_type :json
+    status 200
+    [
+      template,
+      template
+    ].to_json
+  end
+
+  get '/api/v1/templates/:id' do
+    content_type :json
+    status 200
+    template(id: params[:id]).to_json
+  end
+
+  post '/api/v1/templates' do
+    content_type :json
+    status 200
+    template.to_json
+  end
+
+  post '/api/v1/templates/:id/generate_documents' do
+    content_type :json
+    status 200
+    { status: :success }.to_json
+  end
+
+  post '/api/v1/templates/:id/generate_document' do
+    content_type :json
+    status 200
+    document(id: params[:id]).to_json
+  end
+
   post '/api/v1/keys' do
     content_type :json
     status 200
@@ -67,6 +100,14 @@ class FakeMifiel < Sinatra::Base
   end
 
   private
+
+    def template(args = {})
+      {
+        id: args[:id] || SecureRandom.uuid,
+        name: 'some-template',
+        content: '<div><field name="name">NAME</field></div>'
+      }
+    end
 
     def key(args={})
       id = args[:id] || SecureRandom.uuid

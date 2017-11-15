@@ -7,6 +7,8 @@ module Mifiel
     get :find, '/documents/:id'
     put :save, '/documents/:id'
     delete :delete, '/documents/:id'
+    post :create_from_template, '/templates/:template_id/generate_document', timeout: 60
+    post :create_many_from_template, '/templates/:template_id/generate_documents', timeout: 60
 
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def self.create(args)
