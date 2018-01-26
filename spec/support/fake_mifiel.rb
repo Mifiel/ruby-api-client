@@ -99,6 +99,12 @@ class FakeMifiel < Sinatra::Base
     { bla: 'Correo enviado' }.to_json
   end
 
+  post '/api/v1/users/setup-widget' do
+    content_type :json
+    status 200
+    { widget_id: '123bc', success: true }.to_json
+  end
+
   private
 
     def template(args = {})

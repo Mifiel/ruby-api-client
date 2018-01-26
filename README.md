@@ -149,6 +149,22 @@ Certificate methods:
     certificate.delete
   ```
 
+User methods
+
+- Setup Widget
+
+  ```ruby
+    args = {
+      email: 'some@email.com',
+      tax_id: 'AAA010101AAA',
+      callback_url: 'http://some-callback.url'
+    }
+
+    user = Mifiel::User.create(args)
+    user.widget_id
+  ```
+
+
 ## Contributing
 
 1. Fork it ( https://github.com/[my-github-username]/mifiel/fork )
