@@ -1,7 +1,7 @@
 describe Mifiel::User do
-  describe '#create' do
+  describe '#setup_widget' do
     let(:user) do
-      Mifiel::User.create(
+      Mifiel::User.setup_widget(
         email: 'user@email.com',
         tax_id: 'AAA010101AAA',
         callback_url: 'http://some-callback.url/mifiel'

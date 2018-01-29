@@ -1,9 +1,9 @@
 module Mifiel
   class User < Mifiel::Base
-    post :create, '/users/setup-widget'
+    post :setup_widget, '/users/setup-widget'
 
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-    def self.create(args)
+    def self.setup_widget(args)
       email = args[:email]
       tax_id = args[:tax_id]
       callback_url = args[:callback_url]
