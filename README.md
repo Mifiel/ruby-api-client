@@ -160,7 +160,7 @@ User methods
       callback_url: 'http://some-callback.url'
     }
 
-    user = Mifiel::User.create(args)
+    user = Mifiel::User.setup_widget(args)
     user.widget_id
   ```
 
