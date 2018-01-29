@@ -7,6 +7,7 @@ module Mifiel
   autoload :Certificate, 'mifiel/certificate'
   autoload :Template, 'mifiel/template'
   autoload :Config, 'mifiel/config'
+  autoload :User, 'mifiel/user'
 
   BASE_URL = 'https://www.mifiel.com/api/v1'.freeze
 
