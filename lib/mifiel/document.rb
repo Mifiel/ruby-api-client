@@ -73,6 +73,7 @@ module Mifiel
       sgries
     end
 
+    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def self.transfer_from_template(args)
       id = args[:document_id]
 
@@ -92,5 +93,6 @@ module Mifiel
       response = Mifiel::Document.process_request("/documents/#{id}/transfer", :post, payload)
       Mifiel::Document.new(JSON.parse(response))
     end
+    # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
   end
 end

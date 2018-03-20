@@ -77,6 +77,7 @@ class FakeMifiel < Sinatra::Base
       id: params[:id]
     ).to_json
   end
+  
 
   get '/api/v1/documents/:id/file' do
     status 200
@@ -103,6 +104,14 @@ class FakeMifiel < Sinatra::Base
     content_type :json
     status 200
     { widget_id: '123bc', success: true }.to_json
+  end
+
+  post '/api/v1/documents/:id/transfer' do
+    content_type :json
+    status 200
+    document(
+      id: params[:id]
+    ).to_json
   end
 
   private
