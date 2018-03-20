@@ -9,6 +9,7 @@ module Mifiel
     delete :delete, '/documents/:id'
     post :create_from_template, '/templates/:template_id/generate_document', timeout: 60
     post :create_many_from_template, '/templates/:template_id/generate_documents', timeout: 60
+    post :transfer, '/documents/:id/transfer', timeout: 60
 
     # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
     def self.create(args)
@@ -70,6 +71,22 @@ module Mifiel
       sgries = {}
       signatories.each_with_index { |s, i| sgries[i] = s }
       sgries
+    end
+
+    def self.transfer_from_template(args)
+      id = args[:id]
+
+      payload = {
+        from: args[:from],
+        to: args[:to],
+        signatories: args[:signatories],
+        template_id: args[:template_id],
+        fields: args[:fields]
+      }
+      payload.reject! { |_k, v| v.nil? }
+
+      response = Mifiel::Document.process_request("/documents/#{id}/transfer", :post, payload)
+      Mifiel::Document.new(JSON.parse(response))
     end
   end
 end
