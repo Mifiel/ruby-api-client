@@ -77,7 +77,6 @@ class FakeMifiel < Sinatra::Base
       id: params[:id]
     ).to_json
   end
-  
 
   get '/api/v1/documents/:id/file' do
     status 200
