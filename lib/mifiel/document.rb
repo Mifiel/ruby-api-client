@@ -81,7 +81,11 @@ module Mifiel
         to: args[:to],
         signatories: args[:signatories],
         template_id: args[:template_id],
-        fields: args[:fields]
+        fields: args[:fields],
+        callback_url: args[:callback_url],
+        sign_callback_url: args[:sign_callback_url],
+        allow_business: args[:allow_business],
+        external_id: args[:external_id]
       }
       payload.reject! { |_k, v| v.nil? }
 
