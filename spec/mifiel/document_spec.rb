@@ -138,9 +138,12 @@ describe Mifiel::Document do
   describe  '#transfer' do
     context 'from template' do
       let!(:template_id) { 'c6c29866-7fd6-4f77-9ecd-eae8bc3a772a' }
-      let!(:document) do
+      let!(:document) { Mifiel::Document.all.first }
+
+      let!(:template) do
         Mifiel::Document.transfer_from_template(
           template_id: template_id,
+          document_id: document.id,
           fields: {
             name: 'some'
           },
