@@ -74,7 +74,7 @@ module Mifiel
     end
 
     def self.transfer_from_template(args)
-      id = args[:id]
+      id = args[:document_id]
 
       payload = {
         from: args[:from],
