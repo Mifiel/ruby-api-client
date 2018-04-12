@@ -29,7 +29,7 @@ Gem::Specification.new do |spec|
   else
     spec.add_runtime_dependency 'activesupport', '< 5.0.0'
   end
-  spec.add_runtime_dependency 'flexirest', '~> 1.3.35'
+  spec.add_runtime_dependency 'flexirest', '~> 1.6.6'
 
   spec.add_development_dependency 'bump',       '~> 0.5',   '>= 0.5.3'
   spec.add_development_dependency 'bundler',    '~> 1.6'
