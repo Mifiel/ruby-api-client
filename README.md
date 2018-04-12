@@ -164,6 +164,14 @@ User methods
     user.widget_id
   ```
 
+Filtering Results
+
+Our API returns a JSON list of items, this result can be filtered using a `where` method matching a specified criteria (or matching using regular expressions):
+
+```ruby
+  document = Mifiel::Document.find('id')
+  document.signers.where(field: /receiver|issuer/, email: 'some@email.com')
+```
 
 ## Contributing
 
