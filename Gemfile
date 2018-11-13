@@ -11,4 +11,5 @@ group :development, :test do
   gem 'guard-rubocop'
   gem 'listen', '3.0.8'
   gem 'terminal-notifier-guard'
+  gem 'openssl', '2.1.2'
 end
