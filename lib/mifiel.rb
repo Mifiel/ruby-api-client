@@ -1,4 +1,5 @@
 require 'flexirest'
+require_relative './crypto'
 
 module Mifiel
   require 'mifiel/errors'
