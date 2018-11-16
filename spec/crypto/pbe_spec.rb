@@ -23,6 +23,11 @@ describe Crypto::PBE do
           expect(keys.include?(key)).to be false
           keys.add(key)
         end
+        it 'should compare keys with def==(other)' do
+          key = Crypto::PBE.generate
+          key1 = Crypto::PBE.generate
+          expect(key == key1).to be false
+        end
       end
     end
 
