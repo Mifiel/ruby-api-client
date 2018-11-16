@@ -10,6 +10,6 @@ group :development, :test do
   # compatible with ruby >= 1.9.3
   gem 'guard-rubocop'
   gem 'listen', '3.0.8'
-  gem 'terminal-notifier-guard'
   gem 'openssl', '2.1.2'
+  gem 'terminal-notifier-guard'
 end

@@ -5,7 +5,7 @@ require 'securerandom'
 module Crypto
   class PBE
     ALPHA_NUM = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a
-    SPECIALS = ['-', '_', '+', '=', '#', '&', '*', '.']
+    SPECIALS = ['-', '_', '+', '=', '#', '&', '*', '.'].freeze
     CHARS = ALPHA_NUM + SPECIALS
 
     def self.generate
@@ -34,7 +34,7 @@ module Crypto
         salt: salt,
         iterations: @iterations,
         sizeKey: sizeKey,
-        digest: @digest,
+        digest: @digest
       }
       PKCS5.new(args)
     end

@@ -1,3 +1,3 @@
 module Crypto
-  autoload :PBE, 'crypto/PBE'
+  autoload :PBE, 'crypto/pbe'
 end

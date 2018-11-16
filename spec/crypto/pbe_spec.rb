@@ -4,9 +4,9 @@ describe Crypto::PBE do
   let(:specials) { ['-', '_', '+', '=', '#', '&', '*', '.'] }
   let(:valid_chars) { alpha_num + specials }
 
-  describe "#PBE good" do
-    pbe_fixture[:valid].each do | v |
-      describe "#{v.slice(:key, :salt, :keylen, :iterations)}" do
+  describe '#PBE good' do
+    pbe_fixture[:valid].each do |v|
+      describe v.slice(:key, :salt, :keylen, :iterations).to_s do
         let(:pbe) { Crypto::PBE.new(v[:iterations]) }
         let(:key) { pbe.derived_key(v[:key], v[:salt], v[:keylen]) }
         it 'should return a strong key' do
@@ -15,7 +15,7 @@ describe Crypto::PBE do
       end
     end
 
-    describe "Generate random keys" do
+    describe 'Generate random keys' do
       let(:keys) { Set.new }
       5.times do
         key = Crypto::PBE.generate.to_hex
@@ -26,7 +26,7 @@ describe Crypto::PBE do
       end
     end
 
-    describe "Random password + size" do
+    describe 'Random password + size' do
       let(:passwords) { Set.new }
       key_lens = [32, 64, 40]
       5.times do
@@ -39,7 +39,7 @@ describe Crypto::PBE do
         it "should be size #{size}" do
           expect(pass.length).to be size
         end
-        it "should contain specified chars" do
+        it 'should contain specified chars' do
           pass_chars = pass.chars
           expect(pass_chars).to eq(pass_chars & valid_chars)
         end
@@ -48,12 +48,12 @@ describe Crypto::PBE do
   end
 
   describe '#PBE bad' do
-    pbe_fixture[:invalid].each do | v |
-      describe "#{v[:description]}" do
-        let(:pbe){ Crypto::PBE.new(v[:iterations]) }
-        let(:error){ "integer #{v[:keylen]} too big to convert to `int'" }
+    pbe_fixture[:invalid].each do |v|
+      describe v[:description].to_s do
+        let(:pbe) { Crypto::PBE.new(v[:iterations]) }
+        let(:error) { "integer #{v[:keylen]} too big to convert to `int'" }
         it 'should raise key length error' do
-          expect{ pbe.derived_key(v[:key], v[:salt], v[:keylen]) }.to raise_error(RangeError, error)
+          expect { pbe.derived_key(v[:key], v[:salt], v[:keylen]) }.to raise_error(RangeError, error)
         end
       end
     end
