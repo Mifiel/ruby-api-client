@@ -1,4 +1,3 @@
-
 require 'openssl'
 require 'securerandom'
 

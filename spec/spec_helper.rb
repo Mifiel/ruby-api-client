@@ -1,6 +1,3 @@
-require 'pry'
-require 'byebug'
-require 'pry-byebug'
 require 'mifiel'
 require 'webmock/rspec'
 
