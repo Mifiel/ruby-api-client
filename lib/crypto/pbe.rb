@@ -39,19 +39,12 @@ module Crypto
     end
   end
 
-  class PKCS5
+  class PKCS5 < Crypto::Response
     attr_reader :key
-
-    def ==(other)
-      key == other.key
-    end
 
     def initialize(args)
       @key = OpenSSL::PKCS5.pbkdf2_hmac(*args.values)
-    end
-
-    def to_hex
-      key.unpack('H*').first
+      @data = key # key attribute is syntax sugar
     end
   end
 end
