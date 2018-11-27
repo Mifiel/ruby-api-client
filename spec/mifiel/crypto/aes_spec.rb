@@ -1,4 +1,4 @@
-describe Crypto::AES do
+describe Mifiel::Crypto::AES do
   aes_fixture = JSON.parse(File.read('spec/fixtures/aes.json'), symbolize_names: true)
 
   describe '#AES good' do
@@ -6,10 +6,10 @@ describe Crypto::AES do
       describe v.slice(:algorithm, :key, :dataToEncrypt).to_s do
         e_args = { data: v[:dataToEncrypt], key: v[:key], iv: v[:iv], cipher: v[:algorithm] }
         d_args = e_args.clone
-        let(:aes) { Crypto::AES.new(e_args[:cipher]) }
+        let(:aes) { Mifiel::Crypto::AES.new(e_args[:cipher]) }
         let(:encrypted) { aes.encrypt(e_args) }
         it 'should return Encrypted instance' do
-          expect(encrypted).to be_a Crypto::Encrypted
+          expect(encrypted).to be_a Mifiel::Crypto::Encrypted
         end
         it 'should return encrypted hex' do
           expect(encrypted.to_hex).to eq(v[:encrypted])
@@ -23,11 +23,11 @@ describe Crypto::AES do
           expect(aes.decrypt(d_args)).to eq(v[:dataToEncrypt])
         end
         it 'should encrypt & decrypt with static method' do
-          encrypted_data = Crypto::AES.encrypt(e_args)
+          encrypted_data = Mifiel::Crypto::AES.encrypt(e_args)
           expect(encrypted_data == encrypted).to be true
           expect(encrypted_data.to_hex).to eq(v[:encrypted])
           d_args[:data] = encrypted_data
-          expect(Crypto::AES.decrypt(d_args)).to eq(v[:dataToEncrypt])
+          expect(Mifiel::Crypto::AES.decrypt(d_args)).to eq(v[:dataToEncrypt])
         end
       end
     end
@@ -35,7 +35,7 @@ describe Crypto::AES do
     describe 'Generate random iv' do
       let(:ivs) { Set.new }
       5.times do
-        iv = Crypto::AES.random_iv.unpack('H*').first
+        iv = Mifiel::Crypto::AES.random_iv.unpack('H*').first
         it "should be unique #{iv}" do
           expect(ivs.include?(iv)).to be false
           ivs.add(iv)
@@ -46,11 +46,11 @@ describe Crypto::AES do
 
   describe '#AES bad' do
     describe 'ArgumentError, sending wrong data to decrypt' do
-      args = { data: 'bad-data', iv: Crypto::AES.random_iv, key: 'this-aSecure-key' }
-      let(:expected_error) { "Expected keys #{Crypto::AES.new.require_args}" }
+      args = { data: 'bad-data', iv: Mifiel::Crypto::AES.random_iv, key: 'this-aSecure-key' }
+      let(:expected_error) { "Expected keys #{Mifiel::Crypto::AES.new.require_args}" }
       it 'should raise expected error' do
         args = {}
-        expect { Crypto::AES.decrypt(args) }.to raise_error(ArgumentError, expected_error)
+        expect { Mifiel::Crypto::AES.decrypt(args) }.to raise_error(ArgumentError, expected_error)
       end
     end
   end

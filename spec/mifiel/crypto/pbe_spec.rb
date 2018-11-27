@@ -1,4 +1,4 @@
-describe Crypto::PBE do
+describe Mifiel::Crypto::PBE do
   pbe_fixture = JSON.parse(File.read('spec/fixtures/pbe.json'), symbolize_names: true)
   let(:alpha_num) { ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a }
   let(:specials) { ['-', '_', '+', '=', '#', '&', '*', '.'] }
@@ -7,7 +7,7 @@ describe Crypto::PBE do
   describe '#PBE good' do
     pbe_fixture[:valid].each do |v|
       describe v.slice(:key, :salt, :keylen, :iterations).to_s do
-        let(:pbe) { Crypto::PBE.new(v[:iterations]) }
+        let(:pbe) { Mifiel::Crypto::PBE.new(v[:iterations]) }
         let(:key) { pbe.derived_key(v[:key], v[:salt], v[:keylen]) }
         it 'should return a strong key' do
           expect(key.to_hex).to eq(v[:result])
@@ -18,14 +18,14 @@ describe Crypto::PBE do
     describe 'Generate random keys' do
       let(:keys) { Set.new }
       5.times do
-        key = Crypto::PBE.generate.to_hex
+        key = Mifiel::Crypto::PBE.generate.to_hex
         it "should be unique #{key}" do
           expect(keys.include?(key)).to be false
           keys.add(key)
         end
         it 'should compare keys with def==(other)' do
-          key = Crypto::PBE.generate
-          key1 = Crypto::PBE.generate
+          key = Mifiel::Crypto::PBE.generate
+          key1 = Mifiel::Crypto::PBE.generate
           expect(key == key1).to be false
         end
       end
@@ -36,7 +36,7 @@ describe Crypto::PBE do
       key_lens = [32, 64, 40]
       5.times do
         size = key_lens.sample
-        pass = Crypto::PBE.new.random_password(size)
+        pass = Mifiel::Crypto::PBE.new.random_password(size)
         it "should be unique #{pass}" do
           expect(passwords.include?(pass)).to be false
           passwords.add(pass)
@@ -55,7 +55,7 @@ describe Crypto::PBE do
   describe '#PBE bad' do
     pbe_fixture[:invalid].each do |v|
       describe v[:description].to_s do
-        let(:pbe) { Crypto::PBE.new(v[:iterations]) }
+        let(:pbe) { Mifiel::Crypto::PBE.new(v[:iterations]) }
         let(:error) { "integer #{v[:keylen]} too big to convert to `int'" }
         it 'should raise key length error' do
           expect { pbe.derived_key(v[:key], v[:salt], v[:keylen]) }.to raise_error(RangeError, error)

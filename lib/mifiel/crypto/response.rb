@@ -1,4 +1,5 @@
-module Crypto
+module Mifiel
+  module Crypto
   class Response
     attr_reader :data
 
@@ -13,5 +14,6 @@ module Crypto
     def to_hex
       data.unpack('H*').first
     end
+  end
   end
 end

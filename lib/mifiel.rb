@@ -1,5 +1,4 @@
 require 'flexirest'
-require_relative './crypto'
 
 module Mifiel
   require 'mifiel/errors'
@@ -9,6 +8,7 @@ module Mifiel
   autoload :Template, 'mifiel/template'
   autoload :Config, 'mifiel/config'
   autoload :User, 'mifiel/user'
+  autoload :Crypto, 'mifiel/crypto'
 
   BASE_URL = 'https://www.mifiel.com/api/v1'.freeze
 
