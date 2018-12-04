@@ -9,13 +9,15 @@ module Mifiel
         OpenSSL::Random.random_bytes(size)
       end
 
-      def self.encrypt(args)
-        aes = Crypto::AES.new(args[:cipher] || CIPHER)
+      def self.encrypt(cipher: CIPHER, key: nil, iv: nil, data: nil)
+        aes = Mifiel::Crypto::AES.new(cipher)
+        args = { cipher: cipher, key: key, iv: iv, data: data }
         aes.encrypt(args)
       end
 
-      def self.decrypt(args)
-        aes = Crypto::AES.new(args[:cipher] || CIPHER)
+      def self.decrypt(cipher: CIPHER, key: nil, iv: nil, data: nil)
+        aes = Mifiel::Crypto::AES.new(cipher)
+        args = { cipher: cipher, key: key, iv: iv, data: data }
         aes.decrypt(args)
       end
 
@@ -27,35 +29,23 @@ module Mifiel
       end
 
       def random_iv(size = SIZE)
-        Crypto::AES.random_iv(size)
+        Mifiel::Crypto::AES.random_iv(size)
       end
 
-      def encrypt(args)
-        validate_args(args)
-        cipher.encrypt
-        cipher.key = args[:key]
-        cipher.iv = args[:iv]
-        encrypted_data = cipher.update(args[:data]) + cipher.final
-        Encrypted.new(encrypted_data)
+      def encrypt(key: nil, iv: nil, data: nil)
+        iv ||= random_iv
+        Encrypted.new(cipher_final(key, iv, data, action: :encrypt))
       end
 
-      def decrypt(args)
-        validate_args(args)
-        cipher.decrypt
-        cipher.key = args[:key]
-        cipher.iv = args[:iv]
-        cipher.update(args[:data]) + cipher.final
+      def decrypt(key: nil, iv: nil, data: nil)
+        cipher_final(key, iv, data, action: :decrypt)
       end
 
-      private
-
-      def validate_args(args)
-        keys = args.keys
-        require_args.each do |a|
-          unless keys.include?(a)
-            raise ArgumentError, "Expected keys #{require_args}"
-          end
-        end
+      def cipher_final(key, iv, message, action: :encrypt)
+        @cipher.send(action)
+        @cipher.iv = iv
+        @cipher.key = key
+        @cipher.update(message) + @cipher.final
       end
     end
 

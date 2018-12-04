@@ -43,15 +43,4 @@ describe Mifiel::Crypto::AES do
       end
     end
   end
-
-  describe '#AES bad' do
-    describe 'ArgumentError, sending wrong data to decrypt' do
-      args = { data: 'bad-data', iv: Mifiel::Crypto::AES.random_iv, key: 'this-aSecure-key' }
-      let(:expected_error) { "Expected keys #{Mifiel::Crypto::AES.new.require_args}" }
-      it 'should raise expected error' do
-        args = {}
-        expect { Mifiel::Crypto::AES.decrypt(args) }.to raise_error(ArgumentError, expected_error)
-      end
-    end
-  end
 end

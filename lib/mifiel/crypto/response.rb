@@ -1,19 +1,19 @@
 module Mifiel
   module Crypto
-  class Response
-    attr_reader :data
+    class Response
+      attr_reader :data
 
-    def ==(other)
-      data == other.data
-    end
+      def ==(other)
+        data == other.data
+      end
 
-    def initialize(data)
-      @data = data
-    end
+      def initialize(data)
+        @data = data
+      end
 
-    def to_hex
-      data.unpack('H*').first
+      def to_hex
+        data.unpack('H*').first
+      end
     end
-  end
   end
 end
