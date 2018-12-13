@@ -11,14 +11,12 @@ module Mifiel
 
       def self.encrypt(cipher: CIPHER, key: nil, iv: nil, data: nil)
         aes = Mifiel::Crypto::AES.new(cipher)
-        args = { cipher: cipher, key: key, iv: iv, data: data }
-        aes.encrypt(args)
+        aes.encrypt(key: key, iv: iv, data: data)
       end
 
       def self.decrypt(cipher: CIPHER, key: nil, iv: nil, data: nil)
         aes = Mifiel::Crypto::AES.new(cipher)
-        args = { cipher: cipher, key: key, iv: iv, data: data }
-        aes.decrypt(args)
+        aes.decrypt(key: key, iv: iv, data: data)
       end
 
       attr_accessor :cipher, :require_args

@@ -1,13 +1,13 @@
 describe Mifiel::Crypto::AES do
   aes_fixture = JSON.parse(File.read('spec/fixtures/aes.json'), symbolize_names: true)
 
-  describe '#AES good' do
+  describe '#AES' do
     aes_fixture[:valid].each do |v|
       describe v.slice(:algorithm, :key, :dataToEncrypt).to_s do
-        e_args = { data: v[:dataToEncrypt], key: v[:key], iv: v[:iv], cipher: v[:algorithm] }
+        e_args = { data: v[:dataToEncrypt], key: v[:key], iv: v[:iv] }
         d_args = e_args.clone
-        let(:aes) { Mifiel::Crypto::AES.new(e_args[:cipher]) }
-        let(:encrypted) { aes.encrypt(e_args) }
+        let(:aes) { Mifiel::Crypto::AES.new(v[:algorithm]) }
+        let!(:encrypted) { aes.encrypt(e_args) }
         it 'should return Encrypted instance' do
           expect(encrypted).to be_a Mifiel::Crypto::Encrypted
         end
@@ -23,11 +23,14 @@ describe Mifiel::Crypto::AES do
           expect(aes.decrypt(d_args)).to eq(v[:dataToEncrypt])
         end
         it 'should encrypt & decrypt with static method' do
-          encrypted_data = Mifiel::Crypto::AES.encrypt(e_args)
+          # Cipher algorithm should be included in this params, default is 256
+          static_args = e_args.clone
+          static_args[:cipher] = v[:algorithm]
+          encrypted_data = Mifiel::Crypto::AES.encrypt(static_args)
           expect(encrypted_data == encrypted).to be true
           expect(encrypted_data.to_hex).to eq(v[:encrypted])
-          d_args[:data] = encrypted_data
-          expect(Mifiel::Crypto::AES.decrypt(d_args)).to eq(v[:dataToEncrypt])
+          static_args[:data] = encrypted_data
+          expect(Mifiel::Crypto::AES.decrypt(static_args)).to eq(v[:dataToEncrypt])
         end
       end
     end
