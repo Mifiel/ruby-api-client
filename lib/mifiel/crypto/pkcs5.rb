@@ -1,7 +1,6 @@
 module Mifiel
   module Crypto
     class PKCS5
-      SIZE_KEY = 32
       DIGEST = 'hmacWithSHA256'.freeze
       CIPHERS = { 16 => 'AES-128-CBC', 24 => 'AES-192-CBC', 32 => 'AES-256-CBC' }.freeze
 
@@ -12,9 +11,9 @@ module Mifiel
 
        attr_reader :size_key, :cipher_text, :salt, :iv, :cipher, :iterations
 
-      def initialize(iv:, salt:, cipher_text:, iterations:, size_key: nil)
+      def initialize(iv:, salt:, cipher_text:, iterations:, size_key: 32)
         @cipher_text = cipher_text.force_binary
-        @size_key = size_key || SIZE_KEY
+        @size_key = size_key
         @salt = salt.force_binary
         @iv = iv.force_binary
         @iterations = iterations
