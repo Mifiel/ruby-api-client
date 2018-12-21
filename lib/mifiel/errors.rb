@@ -6,4 +6,5 @@ module Mifiel
   NotPrivateKeyError = Class.new ArgumentError
   NoSignatureError = Class.new StandardError
   ECError = Class.new StandardError
+  PKCS5Error = Class.new StandardError
 end
