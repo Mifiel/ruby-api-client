@@ -30,5 +30,6 @@
 			"asn1": "30820513305d06092a864886f70d01050d3050302f06092a86488",
 	    "error": "Unable to read data"
 		}
-	]
+	],
+	"plain_text": "This memo represents a republication of PKCS #5 v2.0 from RSA\nLaboratories' Public-Key Cryptography Standards (PKCS) series, and\nchange control is retained within the PKCS process.  The body of this\ndocument, except for the security considerations section, is taken\ndirectly from that specification.\nThis document provides recommendations for the implementation of\npassword-based cryptography, covering key derivation functions,\nencryption schemes, message-authentication schemes, and ASN.1 syntax\nidentifying the techniques.\nThe recommendations are intended for general application within\ncomputer and communications systems, and as such include a fair\namount of flexibility. They are particularly intended for the\nprotection of sensitive information such as private keys, as in PKCS\n#8 [25]. It is expected that application standards and implementation\nprofiles based on these specifications may include additional\nconstraints.\nOther cryptographic techniques based on passwords, such as password-\nbased key entity authentication and key establishment protocols\n[4][5][26] are outside the scope of this document.  Guidelines for\nthe selection of passwords are also outside the scope.\t"
 }

@@ -22,7 +22,8 @@ describe Mifiel::Crypto::PKCS5 do
     end
 
     it 'Should build asn1 encoding' do
-      pkcs5 = Mifiel::Crypto::PKCS5.new(iv: iv, salt: salt, cipher_text: encrypted_text, iterations: 2000)
+      params = { iv: iv, salt: salt, cipher_text: encrypted_text, iterations: 2000 }
+      pkcs5 = Mifiel::Crypto::PKCS5.new(params)
       pkcs5_read = Mifiel::Crypto::PKCS5.parse(pkcs5.to_der)
       pkcs5_read2 = Mifiel::Crypto::PKCS5.parse(pkcs5_fixture[:valid].first[:asn1])
       expect(pkcs5.asn1).to be_a OpenSSL::ASN1::Sequence
@@ -30,6 +31,9 @@ describe Mifiel::Crypto::PKCS5 do
       expect(pkcs5.to_hex).to eq(der_hex)
       expect(pkcs5 == pkcs5_read).to be true
       expect(pkcs5 == pkcs5_read2).to be false
+      values = pkcs5.values
+      values.slice(:iv, :cipher_text, :salt).each { |key, v| values[key] = v.bth }
+      expect(values).to eq(params.merge(key_size: 32, cipher: 'AES-256-CBC'))
     end
   end
 

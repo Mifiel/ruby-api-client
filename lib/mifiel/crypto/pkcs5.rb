@@ -9,11 +9,11 @@ module Mifiel
          PKCS5.new(reader.values).tap { |pk| pk.instance_variable_set('@asn1', reader.asn1) }
        end
 
-       attr_reader :size_key, :cipher_text, :salt, :iv, :cipher, :iterations
+       attr_reader :key_size, :cipher_text, :salt, :iv, :iterations
 
-      def initialize(iv:, salt:, cipher_text:, iterations:, size_key: 32)
+      def initialize(iv:, salt:, cipher_text:, iterations:, key_size: 32)
         @cipher_text = cipher_text.force_binary
-        @size_key = size_key
+        @key_size = key_size
         @salt = salt.force_binary
         @iv = iv.force_binary
         @iterations = iterations
@@ -33,7 +33,7 @@ module Mifiel
       					])
       				]), 
       				OpenSSL::ASN1::Sequence.new([
-      					OpenSSL::ASN1::ObjectId.new(cipher_id(size_key)),
+      					OpenSSL::ASN1::ObjectId.new(cipher),
       					OpenSSL::ASN1::OctetString.new(iv)
       				])
       			])
@@ -56,14 +56,23 @@ module Mifiel
         to_der.bth
       end
 
-      private
-
-      def cipher_id(size_key)
-        raise Mifiel::PKCS5Error, 'Key len not supported' unless CIPHERS[size_key]
-        CIPHERS[size_key]
+      def cipher
+        raise Mifiel::PKCS5Error, 'Key len not supported' unless CIPHERS[key_size]
+        @cipher ||= CIPHERS[key_size]
       end
 
-      class Reader
+      def values
+        @values ||= {
+          cipher_text: cipher_text,
+          salt: salt,
+          iv: iv,
+          key_size: key_size,
+          iterations: iterations,
+          cipher: cipher
+        }
+      end
+
+      class Reader < self
         attr_reader :asn1
 
         def initialize(der)
@@ -78,13 +87,7 @@ module Mifiel
         end
 
         def values
-          {
-            cipher_text: cipher_text,
-            salt: salt,
-            iv: iv,
-            size_key: size_key,
-            iterations: iterations
-          }
+          super.slice!(:cipher)
         end
 
         def cipher_text
@@ -111,7 +114,7 @@ module Mifiel
           @iterations ||= fetch_asn1(0, 1, 0, 1, 1).value.to_i
         end
 
-        def size_key
+        def key_size
           CIPHERS.to_a.map { |a, b| [b, a] }.to_h[cipher]
         end
 
