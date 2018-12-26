@@ -3,9 +3,9 @@ module Mifiel
   module Crypto
     class AES
       CIPHER = 256
-      SIZE = 16
+      CIPHERS = { 'AES-128-CBC' => 128, 'AES-192-CBC' => 192, 'AES-256-CBC' => 256 }.freeze
 
-      def self.random_iv(size = SIZE)
+      def self.random_iv(size = 16)
         OpenSSL::Random.random_bytes(size)
       end
 
@@ -19,20 +19,22 @@ module Mifiel
         aes.decrypt(key: key, iv: iv, data: data)
       end
 
-      attr_accessor :cipher, :require_args
-
-      def initialize(cipher_type = CIPHER)
-        @require_args = [:key, :iv, :data]
-        @cipher = OpenSSL::Cipher::AES.new(cipher_type, :CBC)
+      def self.build_cipher(cipher)
+        return OpenSSL::Cipher.new(cipher) if cipher.is_a? String
+        OpenSSL::Cipher::AES.new(cipher, :CBC)
+      rescue
+        raise Mifiel::AESError, 'Cipher not supported'
       end
 
-      def random_iv(size = SIZE)
-        Mifiel::Crypto::AES.random_iv(size)
+      attr_accessor :cipher
+
+      def initialize(cipher_id = CIPHER)
+        @cipher = Mifiel::Crypto::AES.build_cipher(cipher_id)
       end
 
       def encrypt(key: nil, iv: nil, data: nil)
-        iv ||= random_iv
-        Encrypted.new(cipher_final(key, iv, data, action: :encrypt))
+        iv ||= Mifiel::Crypto::AES.random_iv(size)
+        cipher_final(key, iv, data, action: :encrypt)
       end
 
       def decrypt(key: nil, iv: nil, data: nil)
@@ -44,12 +46,6 @@ module Mifiel
         @cipher.iv = iv
         @cipher.key = key
         @cipher.update(message) + @cipher.final
-      end
-    end
-
-    class Encrypted < Mifiel::Crypto::Response
-      def to_str
-        data
       end
     end
   end

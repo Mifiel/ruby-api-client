@@ -8,17 +8,10 @@ describe Mifiel::Crypto::AES do
         d_args = e_args.clone
         let(:aes) { Mifiel::Crypto::AES.new(v[:algorithm]) }
         let!(:encrypted) { aes.encrypt(e_args) }
-        it 'should return Encrypted instance' do
-          expect(encrypted).to be_a Mifiel::Crypto::Encrypted
-        end
         it 'should return encrypted hex' do
-          expect(encrypted.to_hex).to eq(v[:encrypted])
+          expect(encrypted.bth).to eq(v[:encrypted])
         end
         it 'should receive binary data and return decipher text' do
-          d_args[:data] = encrypted.data
-          expect(aes.decrypt(d_args)).to eq(v[:dataToEncrypt])
-        end
-        it 'should receive Encrypted instance & return decipher text' do
           d_args[:data] = encrypted
           expect(aes.decrypt(d_args)).to eq(v[:dataToEncrypt])
         end
@@ -28,7 +21,7 @@ describe Mifiel::Crypto::AES do
           static_args[:cipher] = v[:algorithm]
           encrypted_data = Mifiel::Crypto::AES.encrypt(static_args)
           expect(encrypted_data == encrypted).to be true
-          expect(encrypted_data.to_hex).to eq(v[:encrypted])
+          expect(encrypted_data.bth).to eq(v[:encrypted])
           static_args[:data] = encrypted_data
           expect(Mifiel::Crypto::AES.decrypt(static_args)).to eq(v[:dataToEncrypt])
         end
