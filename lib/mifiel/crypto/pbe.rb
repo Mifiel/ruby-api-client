@@ -7,45 +7,27 @@ module Mifiel
       ALPHA_NUM = ('0'..'9').to_a + ('A'..'Z').to_a + ('a'..'z').to_a
       SPECIALS = ['-', '_', '+', '=', '#', '&', '*', '.'].freeze
       CHARS = ALPHA_NUM + SPECIALS
+      ITERATIONS = 1000
 
-      def self.generate
-        pbe = Crypto::PBE.new
-        password = pbe.random_password
-        salt = pbe.random_salt
-        pbe.derived_key(password, salt)
-      end
-
-      def initialize(i = 1000)
-        @iterations = i
-        @digest = OpenSSL::Digest::SHA256.new
-      end
-
-      def random_password(length = 32)
+      def self.random_password(length = 32)
         CHARS.sort_by { SecureRandom.random_number }.join[0...length]
       end
 
-      def random_salt(size = 16)
+      def self.random_salt(size = 16)
         SecureRandom.random_bytes(size)
       end
 
-      def derived_key(password, salt, sizeKey = 24)
+      def self.derive_key(password:, salt:, key_size: 32, iterations: ITERATIONS)
         args = {
           password: password,
           salt: salt,
-          iterations: @iterations,
-          sizeKey: sizeKey,
-          digest: @digest
+          iterations: iterations,
+          key_size: key_size,
+          digest: OpenSSL::Digest::SHA256.new
         }
-        PKCS5.new(args)
-      end
-    end
-
-    class PKCS5 < Mifiel::Crypto::Response
-      attr_reader :key
-
-      def initialize(args)
-        @key = OpenSSL::PKCS5.pbkdf2_hmac(*args.values)
-        @data = key # key attribute is syntax sugar
+        OpenSSL::PKCS5.pbkdf2_hmac(*args.values)
+      rescue => e
+        raise Mifiel::PBError, e.message || 'Unable to derive key.'
       end
     end
   end

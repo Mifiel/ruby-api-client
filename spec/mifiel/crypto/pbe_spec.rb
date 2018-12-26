@@ -5,39 +5,29 @@ describe Mifiel::Crypto::PBE do
   let(:valid_chars) { alpha_num + specials }
 
   describe '#PBE good' do
-    pbe_fixture[:valid].each do |v|
-      describe v.slice(:key, :salt, :keylen, :iterations).to_s do
-        let(:pbe) { Mifiel::Crypto::PBE.new(v[:iterations]) }
-        let(:key) { pbe.derived_key(v[:key], v[:salt], v[:keylen]) }
+    pbe_fixture[:valid].each do |values|
+      describe values.slice(:password, :salt, :key_size, :iterations).to_s do
+        let(:result) { values[:result] }
+        let(:key) { Mifiel::Crypto::PBE.derive_key(values.slice!(:result)) }
         it 'should return a strong key' do
-          expect(key.to_hex).to eq(v[:result])
+          expect(key.bth).to eq(result)
         end
       end
     end
 
-    describe 'Generate random keys' do
-      let(:keys) { Set.new }
-      5.times do
-        key = Mifiel::Crypto::PBE.generate.to_hex
-        it "should be unique #{key}" do
-          expect(keys.include?(key)).to be false
-          keys.add(key)
-        end
-        it 'should compare keys with def==(other)' do
-          key = Mifiel::Crypto::PBE.generate
-          key1 = Mifiel::Crypto::PBE.generate
-          expect(key == key1).to be false
-        end
-      end
-    end
-
-    describe 'Random password + size' do
+    describe 'Random password & random salt' do
       let(:passwords) { Set.new }
+      let(:salts) { Set.new }
       key_lens = [32, 64, 40]
       5.times do
         size = key_lens.sample
-        pass = Mifiel::Crypto::PBE.new.random_password(size)
-        it "should be unique #{pass}" do
+        pass = Mifiel::Crypto::PBE.random_password(size)
+        salt = Mifiel::Crypto::PBE.random_salt.bth
+        it "should be unique salt: #{salt}" do
+          expect(salts.include?(salt)).to be false
+          salts.add(pass)
+        end
+        it "should be unique password: #{pass}" do
           expect(passwords.include?(pass)).to be false
           passwords.add(pass)
         end
@@ -53,12 +43,11 @@ describe Mifiel::Crypto::PBE do
   end
 
   describe '#PBE bad' do
-    pbe_fixture[:invalid].each do |v|
-      describe v[:description].to_s do
-        let(:pbe) { Mifiel::Crypto::PBE.new(v[:iterations]) }
-        let(:error) { "integer #{v[:keylen]} too big to convert to `int'" }
+    pbe_fixture[:invalid].each do |values|
+      describe values[:description].to_s do
+        let(:error) { "integer #{values[:key_size]} too big to convert to `int'" }
         it 'should raise key length error' do
-          expect { pbe.derived_key(v[:key], v[:salt], v[:keylen]) }.to raise_error(RangeError, error)
+          expect { Mifiel::Crypto::PBE.derive_key(values.slice!(:description)) }.to raise_error(Mifiel::PBError, error)
         end
       end
     end
