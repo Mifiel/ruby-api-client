@@ -10,8 +10,8 @@ module CoreExtensions
       end
 
       def force_binary
-        return htb if match?(/^[0-9A-F]+$/i)
-        return self if bth.match?(/^[0-9A-F]+$/i)
+        return htb if match(/^[0-9A-F]+$/i).is_a? MatchData
+        return self if bth.match(/^[0-9A-F]+$/i).is_a? MatchData
         raise ArgumentError, 'Invalid encoding, hex or binary'
       end
     end
