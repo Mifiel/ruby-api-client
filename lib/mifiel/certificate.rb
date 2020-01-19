@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mifiel
   class Certificate < Mifiel::Base
     get :all, '/keys'

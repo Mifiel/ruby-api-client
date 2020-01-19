@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Mifiel::User do
   describe '#setup_widget' do
     let(:user) do

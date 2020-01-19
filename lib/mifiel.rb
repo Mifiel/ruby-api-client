@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'flexirest'
 
 module Mifiel
@@ -9,7 +11,7 @@ module Mifiel
   autoload :Config, 'mifiel/config'
   autoload :User, 'mifiel/user'
 
-  BASE_URL = 'https://www.mifiel.com/api/v1'.freeze
+  BASE_URL = 'https://www.mifiel.com/api/v1'
 
   def self.config
     if block_given?

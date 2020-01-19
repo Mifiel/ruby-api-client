@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pry'
 require 'byebug'
 require 'pry-byebug'
@@ -11,10 +13,9 @@ SimpleCov.start do
 end
 Coveralls.wear!
 
-Dir['./spec/support/**/*.rb'].each { |f| require f }
+Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
 
 RSpec.configure do |config|
-
   config.before(:suite) do
     Mifiel.config do |conf|
       conf.app_id = 'APP_ID'

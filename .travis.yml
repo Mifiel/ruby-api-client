@@ -1,15 +1,31 @@
 language: ruby
 cache: bundler
 sudo: false
+
+gemfile:
+  - gemfiles/rails_5.gemfile
+  - gemfiles/rails_6.gemfile
+
 rvm:
-- 2.1
-- 2.2
-- 2.3.0
+  - 2.3
+  - 2.4
+  - 2.5
+  - 2.6
+
 notifications:
   email:
     on_success: change
     on_failure: always
+
 script:
-- mkdir ./tmp/
-- bundle exec rubocop
-- bundle exec rspec spec
+  - mkdir ./tmp/
+  - bundle exec rubocop
+  - bundle exec rspec
+
+matrix:
+  exclude:
+    - rvm: 2.3
+      gemfile: gemfiles/rails_6.gemfile
+    - rvm: 2.4
+      gemfile: gemfiles/rails_6.gemfile
+  fast_finish: true

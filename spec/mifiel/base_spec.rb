@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Mifiel::Base do
   describe 'rescue_errors' do
     describe 'when bad request' do

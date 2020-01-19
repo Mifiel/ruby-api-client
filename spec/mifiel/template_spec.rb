@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Mifiel::Template do
   let!(:template_id) { 'bb7d65b4-47f1-470e-85e4-22ddae86f9ea' }
 
