@@ -1,23 +1,11 @@
 AllCops:
-  TargetRubyVersion: 2.1
+  TargetRubyVersion: 2.3
 
-Style/IndentationConsistency:
-  Enabled: false
-
-Style/AlignHash:
-  Enabled: false
-
-Style/SpaceAroundEqualsInParameterDefault:
-  Enabled: false
+Layout/LineLength:
+  Max: 190
 
 Style/Documentation:
   Enabled: false
-
-Style/EmptyLinesAroundBlockBody:
-  Enabled: false
-
-Metrics/LineLength:
-  Max: 190
 
 Style/HashSyntax:
   EnforcedStyle: ruby19
@@ -25,3 +13,4 @@ Style/HashSyntax:
 Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
+    - '*.gemspec'

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mifiel
   module Config
     class << self
@@ -26,11 +28,11 @@ module Mifiel
 
       private
 
-        def set_api_auth_credentials
-          Flexirest::Base.base_url = base_url
-          Flexirest::Base.api_auth_credentials(app_id, app_secret)
-          Flexirest::Base.request_body_type = :json
-        end
+      def set_api_auth_credentials
+        Flexirest::Base.base_url = base_url
+        Flexirest::Base.api_auth_credentials(app_id, app_secret)
+        Flexirest::Base.request_body_type = :json
+      end
     end
 
     reset

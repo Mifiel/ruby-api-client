@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Mifiel::Certificate do
   describe '#create' do
     let(:certificate) do
@@ -8,5 +10,4 @@ describe Mifiel::Certificate do
 
     it { expect(certificate).to be_a(Mifiel::Certificate) }
   end
-
 end
