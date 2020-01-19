@@ -26,6 +26,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'json', '~> 1.8'
   spec.add_runtime_dependency 'rest-client', '>= 1.8'
 
+  spec.add_development_dependency 'appraisal'
   spec.add_development_dependency 'bump',       '~> 0.5', '>= 0.5.3'
   spec.add_development_dependency 'bundler',    '~> 1.6'
   spec.add_development_dependency 'byebug',     '~> 9.0', '< 9.0.6'
@@ -34,6 +35,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec',      '~> 3.1', '>= 3.1.7'
   spec.add_development_dependency 'rubocop',    '~> 0.79.0'
   spec.add_development_dependency 'simplecov',  '~> 0.15'
-  spec.add_development_dependency 'sinatra',    '~> 1.4', '>= 1.4.7'
+  spec.add_development_dependency 'sinatra'
   spec.add_development_dependency 'webmock'
 end

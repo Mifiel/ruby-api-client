@@ -1,5 +1,7 @@
 AllCops:
   TargetRubyVersion: 2.3
+  Exclude:
+    - 'gemfiles/**/*'
 
 Layout/LineLength:
   Max: 190
