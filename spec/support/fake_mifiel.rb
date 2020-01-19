@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 require 'sinatra/base'
-# rubocop:disable Metrics/ClassLength
-class FakeMifiel < Sinatra::Base
+
+class FakeMifiel < Sinatra::Base # rubocop:disable Metrics/ClassLength
   get '/api/v1/keys' do
     content_type :json
     status 200
@@ -107,59 +109,58 @@ class FakeMifiel < Sinatra::Base
 
   private
 
-    def template(args = {})
-      {
-        id: args[:id] || SecureRandom.uuid,
-        name: 'some-template',
-        content: '<div><field name="name">NAME</field></div>'
-      }
-    end
+  def template(args = {})
+    {
+      id: args[:id] || SecureRandom.uuid,
+      name: 'some-template',
+      content: '<div><field name="name">NAME</field></div>'
+    }
+  end
 
-    def key(args={})
-      id = args[:id] || SecureRandom.uuid
-      {
-        id: id,
-        type_of: 'FIEL',
-        cer_hex: '308204cf30...1303030303030323',
-        owner: 'JORGE MORALES MENDEZ',
-        tax_id: 'MOMJ811012643',
-        expires_at: '2017-04-28T19:43:23.000Z',
-        expired: false
-      }
-    end
+  def key(args = {})
+    id = args[:id] || SecureRandom.uuid
+    {
+      id: id,
+      type_of: 'FIEL',
+      cer_hex: '308204cf30...1303030303030323',
+      owner: 'JORGE MORALES MENDEZ',
+      tax_id: 'MOMJ811012643',
+      expires_at: '2017-04-28T19:43:23.000Z',
+      expired: false
+    }
+  end
 
-    # rubocop:disable Metrics/MethodLength
-    def document(args={})
-      id = args[:id] || SecureRandom.uuid
-      {
-        id: id,
-        original_hash: Digest::SHA256.hexdigest(id),
-        file_file_name: 'test-pdf.pdf',
-        signed_by_all: true,
+  def document(args = {}) # rubocop:disable Metrics/MethodLength
+    id = args[:id] || SecureRandom.uuid
+    {
+      id: id,
+      original_hash: Digest::SHA256.hexdigest(id),
+      file_file_name: 'test-pdf.pdf',
+      signed_by_all: true,
+      signed: true,
+      signed_at: Time.now.utc.iso8601,
+      status: [1, 'Firmado'],
+      owner: {
+        email: 'signer1@email.com',
+        name: 'Jorge Morales'
+      },
+      file: "/api/v1/documents/#{id}/file",
+      file_download: "/api/v1/documents/#{id}/file?download=true",
+      file_signed: "/api/v1/documents/#{id}/file_signed",
+      file_signed_download: "/api/v1/documents/#{id}/file_signed?download=true",
+      file_zipped: "/api/v1/documents/#{id}/zip",
+      signatures: [{
+        email: 'signer1@email.com',
         signed: true,
-        signed_at: Time.now.utc.iso8601,
-        status: [1, 'Firmado'],
-        owner: {
+        signed_at: (Time.now.utc - 10_000).iso8601,
+        certificate_number: '20001000000200001410',
+        tax_id: 'AAA010101AAA',
+        signature: '77cd5156779c..4e276ef1056c1de11b7f70bed28',
+        user: {
           email: 'signer1@email.com',
           name: 'Jorge Morales'
-        },
-        file: "/api/v1/documents/#{id}/file",
-        file_download: "/api/v1/documents/#{id}/file?download=true",
-        file_signed: "/api/v1/documents/#{id}/file_signed",
-        file_signed_download: "/api/v1/documents/#{id}/file_signed?download=true",
-        file_zipped: "/api/v1/documents/#{id}/zip",
-        signatures: [{
-          email: 'signer1@email.com',
-          signed: true,
-          signed_at: (Time.now.utc - 10_000).iso8601,
-          certificate_number: '20001000000200001410',
-          tax_id: 'AAA010101AAA',
-          signature: '77cd5156779c..4e276ef1056c1de11b7f70bed28',
-          user: {
-            email: 'signer1@email.com',
-            name: 'Jorge Morales'
-          }
-        }]
-      }
-    end
+        }
+      }]
+    }
+  end
 end

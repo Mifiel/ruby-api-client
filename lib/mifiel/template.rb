@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 module Mifiel
   class Template < Mifiel::Base
     get :all, '/templates'

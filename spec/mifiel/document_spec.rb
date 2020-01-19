@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 describe Mifiel::Document do
   let!(:certificate) { File.read('spec/fixtures/FIEL_AAA010101AAA.cer') }
   let!(:private_key) { File.read('spec/fixtures/FIEL_AAA010101AAA.key') }
