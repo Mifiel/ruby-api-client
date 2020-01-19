@@ -38,6 +38,7 @@ Then you can configure the gem with:
   Mifiel.config do |config|
     config.app_id = '<APP_ID>'
     config.app_secret = '<APP_SECRET>'
+    config.base_url = 'https://app-sandbox.mifiel.com/api/v1' #remove this line when you wish to use the prod environment
   end
 ```
 
