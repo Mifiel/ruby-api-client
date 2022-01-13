@@ -1,16 +1,15 @@
 # frozen_string_literal: true
 
 require 'pry'
-require 'byebug'
-require 'pry-byebug'
 require 'mifiel'
 require 'webmock/rspec'
-
 require 'simplecov'
 require 'coveralls'
+
 SimpleCov.start do
   add_filter '/spec/'
 end
+
 Coveralls.wear!
 
 Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
@@ -22,6 +21,9 @@ RSpec.configure do |config|
       conf.app_secret = 'APP_SECRET'
       conf.base_url = 'http://www.mifiel.com/api/v1'
     end
+
+    # Creates ruby-api-client/tmp folder so signed files can be saved correctly
+    Dir.mkdir 'tmp' unless File.directory? 'tmp'
   end
 
   config.before(:each) do

@@ -18,3 +18,4 @@ rubocop.html
 *.sublime-workspace
 vendor
 gemfiles/*.lock
+.idea
