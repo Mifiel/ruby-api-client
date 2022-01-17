@@ -42,14 +42,24 @@ module Mifiel
       Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/request_signature", :post, params)
     end
 
-    def save_file(path)
+    def raw_data
       response = Mifiel::Document.process_request("/documents/#{id}/file", :get)
-      File.open(path, 'wb') { |file| file.write(response) }
+
+      response.body
+    end
+
+    def save_file(path)
+      File.open(path, 'wb') { |file| file.write(raw_data) }
+    end
+
+    def raw_signed_data
+      response = Mifiel::Document.process_request("/documents/#{id}/file_signed", :get)
+
+      response.body
     end
 
     def save_file_signed(path)
-      response = Mifiel::Document.process_request("/documents/#{id}/file_signed", :get)
-      File.open(path, 'wb') { |file| file.write(response) }
+      File.open(path, 'wb') { |file| file.write(raw_signed_data) }
     end
 
     def save_xml(path)

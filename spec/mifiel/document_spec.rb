@@ -70,6 +70,22 @@ describe Mifiel::Document do
   describe 'working with a document' do
     let!(:document) { Mifiel::Document.all.first }
 
+    describe '#raw_data' do
+      let(:document_content) { 'some-pdf-formatted-string' }
+
+      it 'should get the file raw data' do
+        expect(document.raw_data).to eq document_content
+      end
+    end
+
+    describe '#raw_signed_data' do
+      let(:document_content) { 'some-pdf-formatted-string' }
+
+      it 'should get the file raw signed data' do
+        expect(document.raw_signed_data).to eq document_content
+      end
+    end
+
     describe '#save_file' do
       let!(:path) { 'tmp/the-file.pdf' }
       before { File.unlink(path) if File.exist?(path) }
