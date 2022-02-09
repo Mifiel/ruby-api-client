@@ -7,4 +7,5 @@ gemspec
 
 group :development, :test do
   gem 'coveralls', require: false
+  gem 'pry'
 end
