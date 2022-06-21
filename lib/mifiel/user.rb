@@ -22,7 +22,7 @@ module Mifiel
         },
         ssl_version: 'SSLv23'
       )
-      req = ApiAuth.sign!(rest_request, Mifiel.config.app_id, Mifiel.config.app_secret, { override_http_method: :post })
+      req = ApiAuth.sign!(rest_request, Mifiel.config.app_id, Mifiel.config.app_secret, { override_http_method: :post, with_http_method: true })
       Mifiel::User.new(JSON.parse(req.execute))
     end
   end
