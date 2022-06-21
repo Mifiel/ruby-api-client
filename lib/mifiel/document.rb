@@ -74,7 +74,7 @@ module Mifiel
         payload: payload,
         ssl_version: 'SSLv23'
       )
-      req = ApiAuth.sign!(rest_request, Mifiel.config.app_id, Mifiel.config.app_secret, { override_http_method: method, with_http_method: true })
+      req = ApiAuth.sign!(rest_request, Mifiel.config.app_id, Mifiel.config.app_secret, { override_http_method: method })
       req.execute
     end
 
