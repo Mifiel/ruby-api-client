@@ -107,6 +107,14 @@ class FakeMifiel < Sinatra::Base # rubocop:disable Metrics/ClassLength
     { widget_id: '123bc', success: true }.to_json
   end
 
+  post '/api/v1/documents/:id/transfer' do
+    content_type :json
+    status 200
+    document(
+      id: params[:id]
+    ).to_json
+  end
+
   private
 
   def template(args = {})

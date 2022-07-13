@@ -152,4 +152,30 @@ describe Mifiel::Document do
       end
     end
   end
+
+  describe  '#transfer' do
+    context 'from template' do
+      let!(:template_id) { 'c6c29866-7fd6-4f77-9ecd-eae8bc3a772a' }
+      let!(:document) { Mifiel::Document.all.first }
+
+      let!(:template) do
+        Mifiel::Document.transfer_from_template(
+          template_id: template_id,
+          document_id: document.id,
+          fields: {
+            name: 'some'
+          },
+          signatories: [{
+            name: 'Signer',
+            email: 'signer@email.com'
+          }, {
+            name: 'Signer',
+            email: 'signer@email.com'
+          }]
+        )
+      end
+
+      it { expect(document).to be_a Mifiel::Document }
+    end
+  end
 end

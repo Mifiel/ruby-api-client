@@ -82,6 +82,29 @@ Document methods:
   )
 ```
 
+- Transfer:
+  + Using a template
+
+  ```ruby
+    args = {
+      template_id: '29f3cb01-744d-4eae-8718-213aec8a1678',
+      document_id: '29f3cb01-744d-4eae-8718-213aec8a1678',
+       fields: {
+        name: 'My Client Name',
+        date: 'Sep 27 2017'
+      },
+      signatories: [{
+        name: 'Some name',
+        email: 'some@email.com',
+        tax_id: 'AAA010101AAA'
+      }],
+      callback_url: 'https://www.example.com/webhook/url',
+      external_id: 'unique-id'
+    }
+
+    document = Mifiel::Document.transfer_from_template(args)
+  ```
+
 - Save Document related files
 
 ```ruby
