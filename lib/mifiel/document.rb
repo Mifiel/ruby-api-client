@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'open3'
 require 'api-auth'
 
@@ -20,6 +22,7 @@ module Mifiel
       callback_url = args[:callback_url]
       raise ArgumentError, 'Either file or hash must be provided' if !file && !hash
       raise ArgumentError, 'Only one of file or hash must be provided' if file && hash
+
       payload = {
         signatories: build_signatories(signatories),
         callback_url: callback_url,
@@ -34,20 +37,30 @@ module Mifiel
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
-    def request_signature(email, cc: nil)
+    def request_signature(email, cc: nil) # rubocop:disable Naming/MethodParameterName
       params = { email: email }
       params[:cc] = cc if cc.is_a?(Array)
       Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/request_signature", :post, params)
     end
 
-    def save_file(path)
+    def raw_data
       response = Mifiel::Document.process_request("/documents/#{id}/file", :get)
-      File.open(path, 'wb') { |file| file.write(response) }
+
+      response.body
+    end
+
+    def save_file(path)
+      File.open(path, 'wb') { |file| file.write(raw_data) }
+    end
+
+    def raw_signed_data
+      response = Mifiel::Document.process_request("/documents/#{id}/file_signed", :get)
+
+      response.body
     end
 
     def save_file_signed(path)
-      response = Mifiel::Document.process_request("/documents/#{id}/file_signed", :get)
-      File.open(path, 'wb') { |file| file.write(response) }
+      File.open(path, 'wb') { |file| file.write(raw_signed_data) }
     end
 
     def save_xml(path)
@@ -55,10 +68,9 @@ module Mifiel
       File.open(path, 'w') { |file| file.write(response) }
     end
 
-    def self.process_request(path, method, payload=nil)
-      path[0] = '' if path[0] == '/'
+    def self.process_request(path, method, payload = nil)
       rest_request = RestClient::Request.new(
-        url: "#{Mifiel.config.base_url}/#{path}",
+        url: "#{Mifiel.config.base_url}/#{path.gsub(%r{^\/}, '')}",
         method: method,
         payload: payload,
         ssl_version: 'SSLv23'

@@ -17,3 +17,5 @@ rubocop.html
 .ruby-version
 *.sublime-workspace
 vendor
+gemfiles/*.lock
+.idea

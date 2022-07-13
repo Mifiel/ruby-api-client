@@ -38,6 +38,7 @@ Then you can configure the gem with:
   Mifiel.config do |config|
     config.app_id = '<APP_ID>'
     config.app_secret = '<APP_SECRET>'
+    config.base_url = 'https://app-sandbox.mifiel.com/api/v1' #remove this line when you wish to use the prod environment
   end
 ```
 
@@ -187,6 +188,14 @@ User methods
     user.widget_id
   ```
 
+Filtering Results
+
+Our API returns a JSON list of items, this result can be filtered using a `where` method matching a specified criteria (or matching using regular expressions):
+
+```ruby
+  document = Mifiel::Document.find('id')
+  document.signers.where(field: /receiver|issuer/, email: 'some@email.com')
+```
 
 ## Contributing
 

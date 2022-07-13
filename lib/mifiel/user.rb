@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 module Mifiel
   class User < Mifiel::Base
     post :setup_widget, '/users/setup-widget'
 
-    # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
-    def self.setup_widget(args)
+    def self.setup_widget(args) # rubocop:disable Metrics/MethodLength, Metrics/AbcSize
       email = args[:email]
       tax_id = args[:tax_id]
       callback_url = args[:callback_url]
 
       raise ArgumentError, 'Email must be provided' unless email
       raise ArgumentError, 'Tax id must be provided' unless tax_id
+
       rest_request = RestClient::Request.new(
         url: "#{Mifiel.config.base_url}/users/setup-widget",
         method: :post,
