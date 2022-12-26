@@ -1,5 +1,10 @@
+require:
+  - rubocop-rspec
+
 AllCops:
   TargetRubyVersion: 2.3
+  NewCops: enable
+  SuggestExtensions: false
   Exclude:
     - 'gemfiles/**/*'
 
@@ -16,3 +21,15 @@ Metrics/BlockLength:
   Exclude:
     - 'spec/**/*'
     - '*.gemspec'
+
+Style/TrailingCommaInArguments:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInArrayLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+Style/TrailingCommaInHashLiteral:
+  EnforcedStyleForMultiline: consistent_comma
+
+RSpec/NestedGroups:
+  Enabled: false

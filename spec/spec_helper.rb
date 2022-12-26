@@ -26,7 +26,7 @@ RSpec.configure do |config|
     Dir.mkdir 'tmp' unless File.directory? 'tmp'
   end
 
-  config.before(:each) do
+  config.before do
     stub_request(:any, /mifiel.com/).to_rack(FakeMifiel)
   end
 end

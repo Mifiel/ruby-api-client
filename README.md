@@ -73,10 +73,10 @@ Document methods:
       { name: 'Signer 2', email: 'signer2@email.com', tax_id: 'AAA010102AAA' }
     ]
   )
-  # if you dont want us to have the PDF, you can just send us 
+  # if you dont want us to have the PDF, you can just send us
   # the original_hash and the name of the document. Both are required
   document = Mifiel::Document.create(
-    hash: Digest::SHA256.hexdigest(File.read('path/to/my-file.pdf')), 
+    hash: Digest::SHA256.hexdigest(File.read('path/to/my-file.pdf')),
     name: 'my-file.pdf',
     signatories: [...]
   )
@@ -94,14 +94,15 @@ Document methods:
 ```
 
 - Sign:
-  + With a pre-created Certificate
+
+  - With a pre-created Certificate
 
     ```ruby
       certificate = Mifiel::Certificate.find('cert-id')
       document.sign(certificate_id: certificate.id)
     ```
 
-  + With a new one
+  - With a new one
 
     ```ruby
       document.sign(certificate: File.read('FIEL_AAA010101AAA.cer'))
@@ -137,7 +138,7 @@ Certificate methods:
 ```
 
 - Create
-  
+
   ```ruby
   certificate = Mifiel::Certificate.create(
     file: 'path/to/my-certificate.cer'
@@ -182,15 +183,11 @@ Our API returns a JSON list of items, this result can be filtered using a `where
 4. Push to the branch (`git push origin my-new-feature`)
 5. Create a new Pull Request
 
-
 [gem-version-image]: https://badge.fury.io/rb/mifiel.svg
 [gem-version-url]: https://badge.fury.io/rb/mifiel
-
 [security-url]: https://hakiri.io/github/Mifiel/ruby-api-client/master
 [security-image]: https://hakiri.io/github/Mifiel/ruby-api-client/master.svg
-
 [travis-image]: https://travis-ci.org/Mifiel/ruby-api-client.svg?branch=master
 [travis-url]: https://travis-ci.org/Mifiel/ruby-api-client
-
 [coveralls-image]: https://coveralls.io/repos/github/Mifiel/ruby-api-client/badge.svg?branch=master
 [coveralls-url]: https://coveralls.io/github/Mifiel/ruby-api-client?branch=master

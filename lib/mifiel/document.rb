@@ -27,16 +27,15 @@ module Mifiel
         callback_url: callback_url,
         file: (File.new(file) if file),
         original_hash: hash,
-        name: name
+        name: name,
       }
-      payload = args.merge(payload)
-      payload.reject! { |_k, v| v.nil? }
+      payload = args.merge(payload).compact
       response = process_request('/documents', :post, payload)
       Mifiel::Document.new(JSON.parse(response))
     end
     # rubocop:enable Metrics/MethodLength, Metrics/AbcSize
 
-    def request_signature(email, cc: nil) # rubocop:disable Naming/MethodParameterName
+    def request_signature(email, cc: nil)
       params = { email: email }
       params[:cc] = cc if cc.is_a?(Array)
       Mifiel::Document._request("#{Mifiel.config.base_url}/documents/#{id}/request_signature", :post, params)
@@ -49,7 +48,7 @@ module Mifiel
     end
 
     def save_file(path)
-      File.open(path, 'wb') { |file| file.write(raw_data) }
+      File.binwrite(path, raw_data)
     end
 
     def raw_signed_data
@@ -59,20 +58,20 @@ module Mifiel
     end
 
     def save_file_signed(path)
-      File.open(path, 'wb') { |file| file.write(raw_signed_data) }
+      File.binwrite(path, raw_signed_data)
     end
 
     def save_xml(path)
       response = Mifiel::Document.process_request("/documents/#{id}/xml", :get)
-      File.open(path, 'w') { |file| file.write(response) }
+      File.write(path, response)
     end
 
     def self.process_request(path, method, payload = nil)
       rest_request = RestClient::Request.new(
-        url: "#{Mifiel.config.base_url}/#{path.gsub(%r{^\/}, '')}",
+        url: "#{Mifiel.config.base_url}/#{path.gsub(%r{^/}, '')}",
         method: method,
         payload: payload,
-        ssl_version: 'SSLv23'
+        ssl_version: 'SSLv23',
       )
       req = ApiAuth.sign!(rest_request, Mifiel.config.app_id, Mifiel.config.app_secret)
       req.execute

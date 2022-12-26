@@ -8,7 +8,7 @@ class FakeMifiel < Sinatra::Base # rubocop:disable Metrics/ClassLength
     status 200
     [
       key,
-      key
+      key,
     ].to_json
   end
 
@@ -17,7 +17,7 @@ class FakeMifiel < Sinatra::Base # rubocop:disable Metrics/ClassLength
     status 200
     [
       template,
-      template
+      template,
     ].to_json
   end
 
@@ -56,7 +56,7 @@ class FakeMifiel < Sinatra::Base # rubocop:disable Metrics/ClassLength
     status 200
     [
       document,
-      document
+      document,
     ].to_json
   end
 
@@ -68,7 +68,7 @@ class FakeMifiel < Sinatra::Base # rubocop:disable Metrics/ClassLength
       original_hash: Digest::SHA256.hexdigest(params[:file][:tempfile].read),
       file_file_name: params[:file][:filename],
       signed: false,
-      signed_at: nil
+      signed_at: nil,
     ).to_json
   end
 
@@ -76,7 +76,7 @@ class FakeMifiel < Sinatra::Base # rubocop:disable Metrics/ClassLength
     content_type :json
     status 200
     document(
-      id: params[:id]
+      id: params[:id],
     ).to_json
   end
 
@@ -113,7 +113,7 @@ class FakeMifiel < Sinatra::Base # rubocop:disable Metrics/ClassLength
     {
       id: args[:id] || SecureRandom.uuid,
       name: 'some-template',
-      content: '<div><field name="name">NAME</field></div>'
+      content: '<div><field name="name">NAME</field></div>',
     }
   end
 
@@ -126,7 +126,7 @@ class FakeMifiel < Sinatra::Base # rubocop:disable Metrics/ClassLength
       owner: 'JORGE MORALES MENDEZ',
       tax_id: 'MOMJ811012643',
       expires_at: '2017-04-28T19:43:23.000Z',
-      expired: false
+      expired: false,
     }
   end
 
@@ -142,7 +142,7 @@ class FakeMifiel < Sinatra::Base # rubocop:disable Metrics/ClassLength
       status: [1, 'Firmado'],
       owner: {
         email: 'signer1@email.com',
-        name: 'Jorge Morales'
+        name: 'Jorge Morales',
       },
       file: "/api/v1/documents/#{id}/file",
       file_download: "/api/v1/documents/#{id}/file?download=true",
@@ -158,9 +158,9 @@ class FakeMifiel < Sinatra::Base # rubocop:disable Metrics/ClassLength
         signature: '77cd5156779c..4e276ef1056c1de11b7f70bed28',
         user: {
           email: 'signer1@email.com',
-          name: 'Jorge Morales'
-        }
-      }]
+          name: 'Jorge Morales',
+        },
+      }],
     }
   end
 end
