@@ -70,19 +70,19 @@ describe Mifiel::Document do
   describe 'working with a document' do
     let!(:document) { described_class.all.first }
 
-    describe '#raw_data' do
+    describe '#raw_file' do
       let(:document_content) { 'some-pdf-formatted-string' }
 
       it 'gets the file raw data' do
-        expect(document.raw_data).to eq document_content
+        expect(document.raw_file).to eq document_content
       end
     end
 
-    describe '#raw_signed_data' do
+    describe '#raw_file_signed' do
       let(:document_content) { 'some-pdf-formatted-string' }
 
       it 'gets the file raw signed data' do
-        expect(document.raw_signed_data).to eq document_content
+        expect(document.raw_file_signed).to eq document_content
       end
     end
 
