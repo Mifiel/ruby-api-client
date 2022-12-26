@@ -9,3 +9,8 @@ appraise 'rails-6' do
   gem 'rails', '6'
   gem 'sinatra'
 end
+
+appraise 'rails-7' do
+  gem 'rails', '7'
+  gem 'sinatra'
+end

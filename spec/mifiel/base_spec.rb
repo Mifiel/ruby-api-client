@@ -3,8 +3,8 @@
 describe Mifiel::Base do
   describe 'rescue_errors' do
     describe 'when bad request' do
-      it 'should raise error' do
-        base = Mifiel::Base.new
+      it 'raises error' do
+        base = described_class.new
         expect do
           base.rescue_errors('blah', FakeResponse.new(400))
         end.to raise_error(Mifiel::BadRequestError)
@@ -12,8 +12,8 @@ describe Mifiel::Base do
     end
 
     describe 'when server error' do
-      it 'should raise error' do
-        base = Mifiel::Base.new
+      it 'raises error' do
+        base = described_class.new
         expect do
           base.rescue_errors('blah', FakeResponse.new(500))
         end.to raise_error(Mifiel::ServerError)
