@@ -30,7 +30,11 @@ module Mifiel
 
       def set_api_auth_credentials
         Flexirest::Base.base_url = base_url
-        Flexirest::Base.api_auth_credentials(app_id, app_secret)
+        Flexirest::Base.api_auth_credentials(
+          app_id,
+          app_secret,
+          with_http_method: true,
+        )
         Flexirest::Base.request_body_type = :json
       end
     end
