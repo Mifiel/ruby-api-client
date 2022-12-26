@@ -19,17 +19,12 @@ Gem::Specification.new do |spec|
   spec.require_paths = ['lib']
   spec.required_ruby_version = '>= 2.6'
 
-  spec.add_runtime_dependency 'activesupport'
-
   # 1.4 fixes a security MITM issue
   # 2.5 is actually a breaking change: it changes the MD5 header
   spec.add_runtime_dependency 'api-auth', '>= 1.4', '< 2.5'
   spec.add_runtime_dependency 'flexirest', '~> 1.6'
-  spec.add_runtime_dependency 'json', '>= 1.8'
-  spec.add_runtime_dependency 'rest-client', '>= 1.8'
 
   spec.add_development_dependency 'appraisal'
-  spec.add_development_dependency 'bump', '~> 0.5', '>= 0.5.3'
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake'
   spec.add_development_dependency 'rspec'
