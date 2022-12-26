@@ -18,7 +18,7 @@ module Mifiel
         template_id: id,
         identifier: identifier,
         documents: documents,
-        callback_url: callback_url
+        callback_url: callback_url,
       )
     end
   end

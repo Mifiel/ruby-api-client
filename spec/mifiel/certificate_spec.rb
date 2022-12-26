@@ -3,11 +3,11 @@
 describe Mifiel::Certificate do
   describe '#create' do
     let(:certificate) do
-      Mifiel::Certificate.create(
-        'spec/fixtures/FIEL_AAA010101AAA.cer'
+      described_class.create(
+        'spec/fixtures/FIEL_AAA010101AAA.cer',
       )
     end
 
-    it { expect(certificate).to be_a(Mifiel::Certificate) }
+    it { expect(certificate).to be_a(described_class) }
   end
 end
