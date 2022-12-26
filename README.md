@@ -3,7 +3,6 @@
 [![Gem Version][gem-version-image]][gem-version-url]
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
-[![security][security-image]][security-url]
 
 Ruby SDK for [Mifiel](https://www.mifiel.com) API.
 Please read our [documentation](https://docs.mifiel.com/) for instructions on how to start using the API.
