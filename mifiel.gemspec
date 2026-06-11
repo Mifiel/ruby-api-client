@@ -21,7 +21,7 @@ Gem::Specification.new do |spec|
 
   # 1.4 fixes a security MITM issue
   # 2.5 is actually a breaking change: it changes the MD5 header
-  spec.add_dependency 'api-auth', '>= 1.4', '< 2.5'
+  spec.add_dependency 'api-auth', '~> 2.0'
   spec.add_dependency 'flexirest', '~> 1.6'
 
   spec.metadata['rubygems_mfa_required'] = 'true'
