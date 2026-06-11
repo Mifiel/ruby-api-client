@@ -28,16 +28,18 @@ module Mifiel
 
       private
 
-      def set_api_auth_credentials
+      def set_api_auth_credentials # rubocop:disable Metrics/MethodLength
         Flexirest::Base.base_url = base_url
         Flexirest::Base.api_auth_credentials(
           app_id,
           app_secret,
           with_http_method: true,
+          digest: 'sha1',
         )
         Flexirest::Base.request_body_type = :json
         Flexirest::Base.faraday_config do |faraday|
           faraday.headers['User-Agent'] = user_agent
+          faraday.headers['X-ORIGINAL-URI'] = faraday.path_prefix
         end
       end
 

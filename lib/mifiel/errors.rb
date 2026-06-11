@@ -1,10 +1,21 @@
 # frozen_string_literal: true
 
 module Mifiel
-  MifielError = Class.new StandardError
-  BadRequestError = Class.new StandardError
-  ServerError = Class.new StandardError
-  PrivateKeyError = Class.new StandardError
-  NotPrivateKeyError = Class.new ArgumentError
-  NoSignatureError = Class.new StandardError
+  class MifielError < StandardError
+  end
+
+  class BadRequestError < StandardError
+  end
+
+  class ServerError < StandardError
+  end
+
+  class PrivateKeyError < StandardError
+  end
+
+  class NotPrivateKeyError < ArgumentError
+  end
+
+  class NoSignatureError < StandardError
+  end
 end

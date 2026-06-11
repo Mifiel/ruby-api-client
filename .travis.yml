@@ -3,15 +3,15 @@ cache: bundler
 sudo: false
 
 gemfile:
-  - gemfiles/rails_5.gemfile
   - gemfiles/rails_6.gemfile
   - gemfiles/rails_7.gemfile
+  - gemfiles/rails_8.gemfile
 
 rvm:
-  - 2.6
-  - 2.7
-  - 3.0
-  - 3.1
+  - 3.2
+  - 3.3
+  - 3.4
+  - 4.0
 
 notifications:
   email:
@@ -22,17 +22,3 @@ script:
   - mkdir ./tmp/
   - bundle exec rubocop
   - bundle exec rspec
-
-matrix:
-  exclude:
-    # rails 7 requires ruby > 2.7
-    - rvm: 2.6
-      gemfile: gemfiles/rails_7.gemfile
-    # rails 5 is too old for these ruby versions
-    - rvm: 2.7
-      gemfile: gemfiles/rails_5.gemfile
-    - rvm: 3.0
-      gemfile: gemfiles/rails_5.gemfile
-    - rvm: 3.1
-      gemfile: gemfiles/rails_5.gemfile
-  fast_finish: true

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+require 'logger'
 require 'pry'
 require 'mifiel'
 require 'webmock/rspec'
@@ -12,7 +13,7 @@ end
 
 Coveralls.wear!
 
-Dir['./spec/support/**/*.rb'].sort.each { |f| require f }
+Dir['./spec/support/**/*.rb'].each { |f| require f }
 
 RSpec.configure do |config|
   config.before(:suite) do
