@@ -1,17 +1,19 @@
 # frozen_string_literal: true
 
+require 'logger'
+require 'pry'
+require 'mifiel'
 require 'webmock/rspec'
 require 'simplecov'
-require 'rack'
-require 'byebug'
+require 'coveralls'
 
 SimpleCov.start do
   add_filter '/spec/'
 end
 
-require 'mifiel'
+Coveralls.wear!
 
-Dir[File.expand_path(File.join(File.dirname(__FILE__), 'support', '**', '*.rb'))].each { |f| require f }
+Dir['./spec/support/**/*.rb'].each { |f| require f }
 
 RSpec.configure do |config|
   config.before(:suite) do
@@ -22,9 +24,10 @@ RSpec.configure do |config|
     end
 
     # Creates ruby-api-client/tmp folder so signed files can be saved correctly
-    FileUtils.mkdir_p('tmp') unless File.directory?('tmp')
+    Dir.mkdir 'tmp' unless File.directory? 'tmp'
+  end
 
-    # Stub all requests to mifiel.com
+  config.before do
     stub_request(:any, /mifiel.com/).to_rack(FakeMifiel)
   end
 end
