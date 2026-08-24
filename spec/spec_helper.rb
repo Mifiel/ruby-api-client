@@ -20,7 +20,7 @@ RSpec.configure do |config|
     Mifiel.config do |conf|
       conf.app_id = 'APP_ID'
       conf.app_secret = 'APP_SECRET'
-      conf.base_url = 'http://www.mifiel.com/api/v1'
+      conf.base_url = 'https://app.mifiel.com/api/v1'
     end
 
     # Creates ruby-api-client/tmp folder so signed files can be saved correctly
