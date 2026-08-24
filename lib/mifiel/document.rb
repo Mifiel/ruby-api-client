@@ -23,7 +23,7 @@ module Mifiel
     post :create_from_template, '/templates/:template_id/generate_document', timeout: 60
     post :create_many_from_template, '/templates/:template_id/generate_documents', timeout: 60
 
-    # rubocop:disable Metrics/MethodLength
+    # rubocop:disable-next Metrics/MethodLength
     def self.create(args)
       signatories = args[:signatories]
       file = args[:file]
@@ -43,7 +43,6 @@ module Mifiel
       payload = args.merge(payload).compact
       process_request('/documents', :post, payload: payload, type: :form_multipart)
     end
-    # rubocop:enable Metrics/MethodLength
 
     # @deprecated
     def request_signature(email, cc: nil)
