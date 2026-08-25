@@ -11,8 +11,6 @@ SimpleCov.start do
   add_filter '/spec/'
 end
 
-Coveralls.wear!
-
 Dir['./spec/support/**/*.rb'].each { |f| require f }
 
 RSpec.configure do |config|

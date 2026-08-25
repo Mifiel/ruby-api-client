@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        ruby: ['3.3', '3.4', '4.0']
+        gemfile:
+          - gemfiles/rails_7.gemfile
+          - gemfiles/rails_8.gemfile
+    env:
+      BUNDLE_GEMFILE: ${{ matrix.gemfile }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby }}
+          bundler-cache: true
+      - name: Create tmp dir
+        run: mkdir -p tmp
+      - name: RuboCop
+        run: bundle exec rubocop
+      - name: RSpec
+        run: bundle exec rspec
