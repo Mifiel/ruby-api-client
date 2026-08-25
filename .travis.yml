@@ -11,10 +11,33 @@ gemfile:
   - gemfiles/rails_8.gemfile
 
 rvm:
-  # - 3.2
-  # - 3.3
-  # - 3.4
-  - 4.0
+  - 3.2
+  - 3.3
+  - 3.4
+
+# Travis runs `rvm use` before before_install, so `rvm: 4.0` fails on stable
+# RVM. Bootstrap from a known Ruby, then upgrade RVM only on these jobs.
+jobs:
+  include:
+    - rvm: 3.3
+      gemfile: gemfiles/rails_6.gemfile
+      env: INSTALL_RUBY=4.0
+    - rvm: 3.3
+      gemfile: gemfiles/rails_7.gemfile
+      env: INSTALL_RUBY=4.0
+    - rvm: 3.3
+      gemfile: gemfiles/rails_8.gemfile
+      env: INSTALL_RUBY=4.0
+
+before_install:
+  - |
+    if [ -n "$INSTALL_RUBY" ]; then
+      rvm get master
+      rvm reload
+      rvm install "$INSTALL_RUBY"
+      rvm use "$INSTALL_RUBY"
+      ruby -v
+    fi
 
 notifications:
   email:
