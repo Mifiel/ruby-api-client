@@ -1,34 +1,20 @@
-language: generic
+os: linux
+dist: focal
+arch: amd64
+language: ruby
+cache: bundler
 sudo: false
 
-cache:
-  directories:
-    - $HOME/.local/share/mise
-    - vendor/bundle
+gemfile:
+  - gemfiles/rails_6.gemfile
+  - gemfiles/rails_7.gemfile
+  - gemfiles/rails_8.gemfile
 
-env:
-  - RUBY_VERSION=3.2 BUNDLE_GEMFILE=gemfiles/rails_6.gemfile
-  - RUBY_VERSION=3.2 BUNDLE_GEMFILE=gemfiles/rails_7.gemfile
-  - RUBY_VERSION=3.2 BUNDLE_GEMFILE=gemfiles/rails_8.gemfile
-  - RUBY_VERSION=3.3 BUNDLE_GEMFILE=gemfiles/rails_6.gemfile
-  - RUBY_VERSION=3.3 BUNDLE_GEMFILE=gemfiles/rails_7.gemfile
-  - RUBY_VERSION=3.3 BUNDLE_GEMFILE=gemfiles/rails_8.gemfile
-  - RUBY_VERSION=3.4 BUNDLE_GEMFILE=gemfiles/rails_6.gemfile
-  - RUBY_VERSION=3.4 BUNDLE_GEMFILE=gemfiles/rails_7.gemfile
-  - RUBY_VERSION=3.4 BUNDLE_GEMFILE=gemfiles/rails_8.gemfile
-  - RUBY_VERSION=4.0 BUNDLE_GEMFILE=gemfiles/rails_6.gemfile
-  - RUBY_VERSION=4.0 BUNDLE_GEMFILE=gemfiles/rails_7.gemfile
-  - RUBY_VERSION=4.0 BUNDLE_GEMFILE=gemfiles/rails_8.gemfile
-
-before_install:
-  - curl https://mise.run | sh
-  - export PATH="$HOME/.local/bin:$PATH"
-  - mise install ruby@$RUBY_VERSION
-  - eval "$(mise env --shell bash ruby@$RUBY_VERSION)"
-  - ruby -v
-
-install:
-  - bundle install --jobs=3 --retry=3 --path vendor/bundle
+rvm:
+  - 3.2
+  - 3.3
+  - 3.4
+  - 4.0
 
 notifications:
   email:
