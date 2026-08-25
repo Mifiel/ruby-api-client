@@ -6,7 +6,6 @@ cache: bundler
 sudo: false
 
 gemfile:
-  - gemfiles/rails_6.gemfile
   - gemfiles/rails_7.gemfile
   - gemfiles/rails_8.gemfile
 
@@ -19,9 +18,6 @@ rvm:
 # RVM. Bootstrap from a known Ruby, then upgrade RVM only on these jobs.
 jobs:
   include:
-    - rvm: 3.3
-      gemfile: gemfiles/rails_6.gemfile
-      env: INSTALL_RUBY=4.0
     - rvm: 3.3
       gemfile: gemfiles/rails_7.gemfile
       env: INSTALL_RUBY=4.0
