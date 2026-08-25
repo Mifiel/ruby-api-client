@@ -10,7 +10,6 @@ gemfile:
   - gemfiles/rails_8.gemfile
 
 rvm:
-  - 3.2
   - 3.3
   - 3.4
 
