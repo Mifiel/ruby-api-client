@@ -9,6 +9,7 @@ module Mifiel
   autoload :Document, 'mifiel/document'
   autoload :Certificate, 'mifiel/certificate'
   autoload :Template, 'mifiel/template'
+  autoload :Webhook, 'mifiel/webhook'
   autoload :Config, 'mifiel/config'
   autoload :User, 'mifiel/user'
 

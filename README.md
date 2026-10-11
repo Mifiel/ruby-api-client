@@ -4,8 +4,16 @@
 [![Build Status][travis-image]][travis-url]
 [![Coverage Status][coveralls-image]][coveralls-url]
 
-Ruby SDK for [Mifiel](https://www.mifiel.com) API.
-Please read our [documentation](https://docs.mifiel.com/) for instructions on how to start using the API.
+Ruby SDK for the [Mifiel](https://www.mifiel.com) API.
+
+## Documentation
+
+API reference, guides, and examples:
+
+- English: https://docs.mifiel.com/en/
+- Español: https://docs.mifiel.com/es/
+
+This README covers installation and client setup only.
 
 ## Installation
 
@@ -17,28 +25,35 @@ gem 'mifiel'
 
 And then execute:
 
-    $ bundle
+```bash
+bundle
+```
 
 Or install it yourself as:
 
-    $ gem install mifiel
+```bash
+gem install mifiel
+```
 
-## Usage
+## Setup
 
-Follow the steps in our [documentation](https://docs.mifiel.com/) to create an account and get your access tokens, then you can configure the gem with:
+1. Create an account (production or [sandbox](https://app-sandbox.mifiel.com)).
+2. Generate an `APP_ID` and `APP_SECRET` in [Access Tokens](https://app-sandbox.mifiel.com/settings/access-tokens).
+3. Configure the gem:
 
 ```ruby
-  Mifiel.config do |config|
-    config.app_id = '<APP_ID>'
-    config.app_secret = '<APP_SECRET>'
-    # remove the next line when you wish to use the prod environment
-    config.base_url = 'https://app-sandbox.mifiel.com/api/v1'
-  end
+Mifiel.config do |config|
+  config.app_id = '<APP_ID>'
+  config.app_secret = '<APP_SECRET>'
+  # Production is the default.
+  # For sandbox:
+  config.base_url = 'https://app-sandbox.mifiel.com/api/v1'
+end
 ```
 
 ## Contributing
 
-1. Fork it ( https://github.com/[my-github-username]/mifiel/fork )
+1. Fork it (https://github.com/Mifiel/ruby-api-client/fork)
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)
